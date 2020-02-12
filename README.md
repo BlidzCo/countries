@@ -1,19 +1,18 @@
-# World countries in JSON, CSV, XML and YAML.
+A library for Dart developers.
 
-[![Latest Stable Version](https://img.shields.io/npm/v/world-countries.svg?style=flat)](https://www.npmjs.com/package/world-countries)
-[![Latest Stable Version](https://img.shields.io/packagist/v/mledoze/countries.svg?style=flat)](https://packagist.org/packages/mledoze/countries)
-[![License](https://img.shields.io/packagist/l/mledoze/countries.svg?style=flat)](https://opendatacommons.org/licenses/odbl/1.0/)
-[![PHP from Packagist](https://img.shields.io/packagist/php-v/mledoze/countries.svg)](https://packagist.org/packages/mledoze/countries)
+Created from templates made available by Stagehand under a BSD-style
+[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
 
-[![Build Status](https://github.com/mledoze/countries/workflows/CI/badge.svg)](https://github.com/mledoze/countries/actions)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mledoze/countries/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mledoze/countries/?branch=master)
-[![Downloads](https://img.shields.io/npm/dm/world-countries.svg?style=flat)](https://www.npmjs.com/package/world-countries)
+## Usage
 
-## Countries data
-This repository contains a list of world countries, as defined by [ISO Standard 3166-1](https://en.wikipedia.org/wiki/ISO_3166-1),
-in JSON, CSV, XML and YAML. **Warning:** not all entities in this project are independent countries; refer to the `independent` property to know if the country is considered a sovereign state.
+A simple usage example:
 
-Each line contains the country:
+````dart
+import 'package:countries/countries.dart';
+
+main() {
+  var awesome = new Awesome();
+}
 
  - `name`
  	 - `common` - common name in english
@@ -130,129 +129,10 @@ GeoJSON outlines and flags in SVG format.
 	"callingCodes": ["+43"]
 	"flag": "\ud83c\udde6\ud83c\uddf9"
 }
-```
+````
 
-##### GeoJSON and TopoJSON outlines
-See an example for Germany: [GeoJSON](https://github.com/mledoze/countries/blob/bb61a1cddfefd09ad5c92ad0a1effbfceba39930/data/deu.geo.json) or [TopoJSON](https://github.com/mledoze/countries/blob/442472de98e80f4a44f1028960dbb0dfb1d942fe/data/deu.topo.json).
+## Features and bugs
 
-##### CSV
-```csv
-"name";"tld";"cca2";"ccn3";"cca3";"cioc";"currency";"idd";"capital";"altSpellings";"region";"subregion";"languages";"translations";"latlng";"demonym";"landlocked";"borders";"area"
-⋮
-"Aruba,Aruba,Aruba,Aruba,Aruba,Aruba";".aw";"AW";"533";"ABW";"ARU";"AWG";"+2,97";"Oranjestad";"AW";"Americas";"Caribbean";"Dutch,Papiamento";"Aruba,Aruba,Aruba,Aruba,Aruba,Aruba,Aruba,Aruba,Aruba,Aruba,アルバ,アルバ,Aruba,Aruba,Aruba,Aruba,Аруба,Аруба,Aruba,Aruba";"12.5,-69.96666666";"Aruban";"";"";"180"
-"Afghanistan,Islamic Republic of Afghanistan,جمهوری اسلامی افغانستان,افغانستان,د افغانستان اسلامي جمهوریت,افغانستان,Owganystan Yslam Respublikasy,Owganystan";".af";"AF";"004";"AFG";"AFG";"AFN";"+9,3";"Kabul";"AF,Afġānistān";"Asia";"Southern Asia";"Dari,Pashto,Turkmen";"Islamic Republic of Afghanistan,Affganistan,Islamischen Republik Afghanistan,Afghanistan,Afganistanin islamilainen tasavalta,Afganistan,République islamique d'Afghanistan,Afghanistan,Islamska Republika Afganistan,Afganistan,Repubblica islamica dell'Afghanistan,Afghanistan,アフガニスタン·イスラム共和国,アフガニスタン,Islamitische Republiek Afghanistan,Afghanistan,República Islâmica do Afeganistão,Afeganistão,Исламская Республика Афганистан,Афганистан,República Islámica de Afganistán,Afganistán";"33,65";"Afghan";"1";"IRN,PAK,TKM,UZB,TJK,CHN";"652230"
-"Angola,Republic of Angola,República de Angola,Angola";".ao";"AO";"024";"AGO";"ANG";"AOA";"+2,44";"Luanda";"AO,República de Angola,ʁɛpublika de an'ɡɔla";"Africa";"Middle Africa";"Portuguese";"Republic of Angola,Angola,Republik Angola,Angola,Angolan tasavalta,Angola,République d'Angola,Angola,Republika Angola,Angola,Repubblica dell'Angola,Angola,アンゴラ共和国,アンゴラ,Republiek Angola,Angola,República de Angola,Angola,Республика Ангола,Ангола,República de Angola,Angola";"-12.5,18.5";"Angolan";"";"COG,COD,ZMB,NAM";"1246700"
-⋮
-```
+Please file feature requests and bugs at the [issue tracker][tracker].
 
-##### XML
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<countries>
-  <country name="Aruba,Aruba,Aruba,Aruba,Aruba,Aruba" tld=".aw" cca2="AW" ccn3="533" cca3="ABW" cioc="ARU" currency="AWG" idd="+2,97" capital="Oranjestad" altSpellings="AW" region="Americas" subregion="Caribbean" languages="Dutch,Papiamento" translations="Aruba,Aruba,Aruba,Aruba,Aruba,Aruba,Aruba,Aruba,Aruba,Aruba,アルバ,アルバ,Aruba,Aruba,Aruba,Aruba,Аруба,Аруба,Aruba,Aruba" latlng="12.5,-69.96666666" demonym="Aruban" landlocked="" borders="" area="180"/>
-  <country name="Afghanistan,Islamic Republic of Afghanistan,جمهوری اسلامی افغانستان,افغانستان,د افغانستان اسلامي جمهوریت,افغانستان,Owganystan Yslam Respublikasy,Owganystan" tld=".af" cca2="AF" ccn3="004" cca3="AFG" cioc="AFG" currency="AFN" idd="+9,3" capital="Kabul" altSpellings="AF,Afġānistān" region="Asia" subregion="Southern Asia" languages="Dari,Pashto,Turkmen" translations="Islamic Republic of Afghanistan,Affganistan,Islamischen Republik Afghanistan,Afghanistan,Afganistanin islamilainen tasavalta,Afganistan,République islamique d'Afghanistan,Afghanistan,Islamska Republika Afganistan,Afganistan,Repubblica islamica dell'Afghanistan,Afghanistan,アフガニスタン·イスラム共和国,アフガニスタン,Islamitische Republiek Afghanistan,Afghanistan,República Islâmica do Afeganistão,Afeganistão,Исламская Республика Афганистан,Афганистан,República Islámica de Afganistán,Afganistán" latlng="33,65" demonym="Afghan" landlocked="1" borders="IRN,PAK,TKM,UZB,TJK,CHN" area="652230"/>
-  <country name="Angola,Republic of Angola,República de Angola,Angola" tld=".ao" cca2="AO" ccn3="024" cca3="AGO" cioc="ANG" currency="AOA" idd="+2,44" capital="Luanda" altSpellings="AO,República de Angola,ʁɛpublika de an'ɡɔla" region="Africa" subregion="Middle Africa" languages="Portuguese" translations="Republic of Angola,Angola,Republik Angola,Angola,Angolan tasavalta,Angola,République d'Angola,Angola,Republika Angola,Angola,Repubblica dell'Angola,Angola,アンゴラ共和国,アンゴラ,Republiek Angola,Angola,República de Angola,Angola,Республика Ангола,Ангола,República de Angola,Angola" latlng="-12.5,18.5" demonym="Angolan" landlocked="" borders="COG,COD,ZMB,NAM" area="1246700"/>
-⋮
-<countries>
-```
-
-##### YAML
-```yaml
-- { name: { common: Aruba, official: Aruba, native: { nld: { official: Aruba, common: Aruba }, pap: { official: Aruba, common: Aruba } } }, tld: [.aw], cca2: AW, ccn3: '533', cca3: ABW, cioc: ARU, currency: [AWG], idd: { root: '+2', suffixes: ['97'] }, capital: Oranjestad, altSpellings: [AW], region: Americas, subregion: Caribbean, languages: { nld: Dutch, pap: Papiamento }, translations: { deu: { official: Aruba, common: Aruba }, fin: { official: Aruba, common: Aruba }, fra: { official: Aruba, common: Aruba }, hrv: { official: Aruba, common: Aruba }, ita: { official: Aruba, common: Aruba }, jpn: { official: アルバ, common: アルバ }, nld: { official: Aruba, common: Aruba }, por: { official: Aruba, common: Aruba }, rus: { official: Аруба, common: Аруба }, spa: { official: Aruba, common: Aruba } }, latlng: [12.5, -69.96666666], demonym: Aruban, landlocked: false, borders: {  }, area: 180 }
-- { name: { common: Afghanistan, official: 'Islamic Republic of Afghanistan', native: { prs: { official: 'جمهوری اسلامی افغانستان', common: افغانستان }, pus: { official: 'د افغانستان اسلامي جمهوریت', common: افغانستان }, tuk: { official: 'Owganystan Yslam Respublikasy', common: Owganystan } } }, tld: [.af], cca2: AF, ccn3: '004', cca3: AFG, cioc: AFG, currency: [AFN], idd: { root: '+9', suffixes: ['3'] }, capital: Kabul, altSpellings: [AF, Afġānistān], region: Asia, subregion: 'Southern Asia', languages: { prs: Dari, pus: Pashto, tuk: Turkmen }, translations: { cym: { official: 'Islamic Republic of Afghanistan', common: Affganistan }, deu: { official: 'Islamischen Republik Afghanistan', common: Afghanistan }, fin: { official: 'Afganistanin islamilainen tasavalta', common: Afganistan }, fra: { official: 'République islamique d''Afghanistan', common: Afghanistan }, hrv: { official: 'Islamska Republika Afganistan', common: Afganistan }, ita: { official: 'Repubblica islamica dell''Afghanistan', common: Afghanistan }, jpn: { official: アフガニスタン·イスラム共和国, common: アフガニスタン }, nld: { official: 'Islamitische Republiek Afghanistan', common: Afghanistan }, por: { official: 'República Islâmica do Afeganistão', common: Afeganistão }, rus: { official: 'Исламская Республика Афганистан', common: Афганистан }, spa: { official: 'República Islámica de Afganistán', common: Afganistán } }, latlng: [33, 65], demonym: Afghan, landlocked: true, borders: [IRN, PAK, TKM, UZB, TJK, CHN], area: 652230 }
-- { name: { common: Angola, official: 'Republic of Angola', native: { por: { official: 'República de Angola', common: Angola } } }, tld: [.ao], cca2: AO, ccn3: '024', cca3: AGO, cioc: ANG, currency: [AOA], idd: { root: '+2', suffixes: ['44'] }, capital: Luanda, altSpellings: [AO, 'República de Angola', 'ʁɛpublika de an''ɡɔla'], region: Africa, subregion: 'Middle Africa', languages: { por: Portuguese }, translations: { cym: { official: 'Republic of Angola', common: Angola }, deu: { official: 'Republik Angola', common: Angola }, fin: { official: 'Angolan tasavalta', common: Angola }, fra: { official: 'République d''Angola', common: Angola }, hrv: { official: 'Republika Angola', common: Angola }, ita: { official: 'Repubblica dell''Angola', common: Angola }, jpn: { official: アンゴラ共和国, common: アンゴラ }, nld: { official: 'Republiek Angola', common: Angola }, por: { official: 'República de Angola', common: Angola }, rus: { official: 'Республика Ангола', common: Ангола }, spa: { official: 'República de Angola', common: Angola } }, latlng: [-12.5, 18.5], demonym: Angolan, landlocked: false, borders: [COG, COD, ZMB, NAM], area: 1246700 }
-```
-
-## Customising the output
-The data files provided in the `dist` directory include all available fields, but is also possible to build a custom version of the data with certain fields excluded.
-
-To do this, you will first need a working PHP installation, [composer](https://getcomposer.org) and a local copy of this repository. Once you have these, open a terminal in your local version of this project's root directory and run this command to install the necessary dependencies:
-
-```sh
-composer install
-```
-
-After this finishes, run the following command (here we will exclude the `tld` field from the output, but you can exclude any field you want):
-
-```sh
-php countries.php convert --exclude-field=tld
-```
-
-You can also exclude multiple fields:
-
-```sh
-php countries.php convert --exclude-field=tld --exclude-field=cca2
-
-# Or using the shorter `-x` syntax:
-php countries.php convert -x tld -x cca2
-```
-
-If you prefer to include only some fields (this can not be combined with `--exclude-field`):
-
-```sh
-php countries.php convert --include-field=name --include-field=area
-
-# or using the shorter `-i` syntax:
-php countries.php convert -i=name -i=area
-```
-
-The generated files are put into the `dist` directory, but you can change this to another existing directory:
-
-```sh
-mkdir foobar
-php countries.php convert --output-dir=foobar
-```
-
-You can also choose to only generate some of the output formats:
-
-```sh
-mkdir foobar
-php countries.php convert --format=json_unescaped --format=csv
-
-# or using the shorter `-f` syntax:
-php countries.php convert -f json_unescaped -f csv
-```
-
-
-## Showcase
-Projects using this dataset:
-
-- [REST Countries](https://restcountries.eu/)
-- [International Telephone Input](https://intl-tel-input.com/)
-- [Telephone JS](https://github.com/lukaswhite/telephones-js)
-- [Countries of the World](http://countries.petethompson.net/)
-- [Country Prefix Codes For Go](https://github.com/relops/prefixes)
-- [Country Info Mapper in Go](https://github.com/pirsquare/country-mapper)
-- [Visa requirements in JSON](https://github.com/StrudelInc/visas2)
-- [Country picker modal for React Native](https://github.com/xcarpentier/react-native-country-picker-modal)
-- [Agnostic Virtual Assistant](https://github.com/ava-ia/core)
-
-## How to contribute?
-Please refer to [CONTRIBUTING](https://github.com/mledoze/countries/blob/master/CONTRIBUTING.md).
-
-## To do
- - add the type of the country (country, sovereign state, public body, territory, etc.)
- - add missing translations
- - pull in data automatically from CLDR at build time (idea from @Munter, see #108)
-
-## Sources
-https://www.currency-iso.org/ for currency codes.
-
-Region and subregion are taken from https://github.com/hexorx/countries.
-
-GeoJSON outlines come from http://thematicmapping.org/downloads/world_borders.php.
-
-The rest comes from Wikipedia.
-
-## Credits
-Thanks to:
- - @Glazz for his help with country calling codes
- - @hexorx for his work (https://github.com/hexorx/countries)
- - @frederik-jacques for the capital cities
- - @fayer for the population, geolocation, demonym and area data
- - @ancosen for his help with the borders data
- - @herrjemand for country names and various fixes
- - all the contributors: https://github.com/mledoze/countries/graphs/contributors
-
-## License
-See [LICENSE](https://github.com/mledoze/countries/blob/master/LICENSE).
+[tracker]: http://example.com/issues/replaceme
