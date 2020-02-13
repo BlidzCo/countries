@@ -55,11 +55,21 @@ class Country {
 
 class Countries {
   static final Countries _instance = Countries._internal();
-  static String _countriesJson, _subdivisionsJson;
+  static String _countriesJson,
+      _subdivisionsJson,
+      _countriesFile,
+      _subdivisionsFile;
 
-  factory Countries({String countriesJson = 'lib/countries.json', String subdivisionsJson = 'lib/subdivisions.json'}) {
+  factory Countries(
+      {String countriesFile = 'lib/countries.json',
+      String subdivisionsFile = 'lib/subdivisions.json',
+      String countriesJson,
+      String subdivisionsJson}) {
     _countriesJson = countriesJson;
     _subdivisionsJson = subdivisionsJson;
+    _countriesFile = countriesFile;
+    _subdivisionsFile = subdivisionsFile;
+
     return _instance;
   }
 
@@ -112,8 +122,9 @@ class Countries {
   }
 
   Future<void> _getCountries() async {
-    print('Load ${_countriesJson ?? './countries.json'}');
-    var dataString = await (File(_countriesJson ?? './countries.json').readAsString());
+    //print('Load ${_countriesFile ?? './countries.json'}');
+    var dataString = _countriesJson ??
+        await (File(_countriesFile ?? './countries.json').readAsString());
     //print('compute countries json');
     // _countries = _buildCountries(dataString);
     _countries = await _computer.compute(_buildCountries, param: dataString);
@@ -124,8 +135,9 @@ class Countries {
   }
 
   Future<void> _getSubDivisions() async {
-    print('Load ${_subdivisionsJson ?? './subdivisions.json'}');
-    var dataString = await (File(_subdivisionsJson ?? './subdivisions.json').readAsString());
+    //print('Load ${_subdivisionsFile ?? './subdivisions.json'}');
+    var dataString = _subdivisionsJson ??
+        await (File(_subdivisionsFile ?? './subdivisions.json').readAsString());
     //print('compute subdivisions json');
     // _subdivisions = _buildSubDivisions(dataString);
     _subdivisions =
