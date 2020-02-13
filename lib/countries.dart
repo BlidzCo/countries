@@ -55,8 +55,11 @@ class Country {
 
 class Countries {
   static final Countries _instance = Countries._internal();
+  static String _countriesJson, _subdivisionsJson;
 
-  factory Countries() {
+  factory Countries({String countriesJson = 'lib/countries.json', String subdivisionsJson = 'lib/subdivisions.json'}) {
+    _countriesJson = countriesJson;
+    _subdivisionsJson = subdivisionsJson;
     return _instance;
   }
 
@@ -109,8 +112,8 @@ class Countries {
   }
 
   Future<void> _getCountries() async {
-    //print('load countries json');
-    var dataString = await (File('./countries.json').readAsString());
+    print('Load ${_countriesJson ?? './countries.json'}');
+    var dataString = await (File(_countriesJson ?? './countries.json').readAsString());
     //print('compute countries json');
     // _countries = _buildCountries(dataString);
     _countries = await _computer.compute(_buildCountries, param: dataString);
@@ -121,8 +124,8 @@ class Countries {
   }
 
   Future<void> _getSubDivisions() async {
-    //print('load subdivisions json');
-    var dataString = await (File('./subdivisions.json').readAsString());
+    print('Load ${_subdivisionsJson ?? './subdivisions.json'}');
+    var dataString = await (File(_subdivisionsJson ?? './subdivisions.json').readAsString());
     //print('compute subdivisions json');
     // _subdivisions = _buildSubDivisions(dataString);
     _subdivisions =
