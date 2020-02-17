@@ -10,7 +10,7 @@ part 'serializers.g.dart';
 //add all of the built value types that require serialization
 @SerializersFor([
   CountryData,
-  SubDivisionData,
+  // SubDivisionData,
   CountryName,
   Currency,
   CountryIdd,

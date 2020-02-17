@@ -3,6 +3,7 @@
 /// More dartdocs go here.
 library countries;
 
+import 'dart:collection';
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
@@ -24,25 +25,42 @@ BuiltMap<String, CountryData> _buildCountries(dataString) {
   });
 }
 
-BuiltMap<String, SubDivisionData> _buildSubDivisions(dataString) {
+BuiltMap<String, SubDivision<String, BuiltList<CountrySubDivision>>> _buildSubDivisions(dataString) {
   List<dynamic> data = json.decode(dataString);
 
-  BuiltList subDivisionData = deserializeListOf<SubDivisionData>(data);
   return BuiltMap.from({
-    for (var item in subDivisionData)
-      (item as SubDivisionData).country: item as SubDivisionData
+    for (var item in data)
+      item['country']: SubDivision<String, BuiltList<CountrySubDivision>>(
+          Map<String, BuiltList<CountrySubDivision>>.from({
+            for (String subdivision in item.keys)
+              if (subdivision != 'country')
+                subdivision:
+                    deserializeListOf<CountrySubDivision>(item[subdivision])
+          }),
+          item['country'])
   });
+}
+
+class SubDivision<K, V> extends MapView<K, V> {
+  final String country;
+
+  List<CountrySubDivision> get toList => [for (K key in keys) for (CountrySubDivision item in this[key]) item];
+
+  SubDivision(Map<K, V> divisions, String country)
+      : country = country,
+        super(divisions);
 }
 
 class Country {
   final CountryData _countryData;
-  final SubDivisionData _subDivisionData;
+  final SubDivision<String, BuiltList<CountrySubDivision>> _subDivisionData;
 
-  Country(CountryData countryData, SubDivisionData subDivisionData)
+  Country(CountryData countryData,
+      SubDivision<String, BuiltList<CountrySubDivision>> subDivisionData)
       : _countryData = countryData,
         _subDivisionData = subDivisionData;
 
-  SubDivisionData get subDivisions => _subDivisionData;
+  SubDivision<String, BuiltList<CountrySubDivision>> get subDivisions => _subDivisionData;
   CountryData get details => _countryData;
   String get currency => _countryData.currencies.keys.first;
   Currency get currencyDetails =>
@@ -74,7 +92,7 @@ class Countries {
   }
 
   BuiltMap<String, CountryData> _countries;
-  BuiltMap<String, SubDivisionData> _subdivisions;
+  BuiltMap<String, SubDivision<String, BuiltList<CountrySubDivision>>> _subdivisions;
   Map<String, Country> _builtCountries;
 
   Country getCountry(String name) {
