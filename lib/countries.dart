@@ -25,7 +25,8 @@ BuiltMap<String, CountryData> _buildCountries(dataString) {
   });
 }
 
-BuiltMap<String, SubDivision<String, BuiltList<CountrySubDivision>>> _buildSubDivisions(dataString) {
+BuiltMap<String, SubDivision<String, BuiltList<CountrySubDivision>>>
+    _buildSubDivisions(dataString) {
   List<dynamic> data = json.decode(dataString);
 
   return BuiltMap.from({
@@ -44,7 +45,8 @@ BuiltMap<String, SubDivision<String, BuiltList<CountrySubDivision>>> _buildSubDi
 class SubDivision<K, V> extends MapView<K, V> {
   final String country;
 
-  List<CountrySubDivision> get toList => [for (K key in keys) for (CountrySubDivision item in this[key]) item];
+  List<CountrySubDivision> get toList =>
+      [for (K key in keys) for (CountrySubDivision item in this[key]) item];
 
   SubDivision(Map<K, V> divisions, String country)
       : country = country,
@@ -60,7 +62,8 @@ class Country {
       : _countryData = countryData,
         _subDivisionData = subDivisionData;
 
-  SubDivision<String, BuiltList<CountrySubDivision>> get subDivisions => _subDivisionData;
+  SubDivision<String, BuiltList<CountrySubDivision>> get subDivisions =>
+      _subDivisionData;
   CountryData get details => _countryData;
   String get currency => _countryData.currencies.keys.first;
   Currency get currencyDetails =>
@@ -75,24 +78,34 @@ class Countries {
   static final Countries _instance = Countries._internal();
   static String _countriesJson,
       _subdivisionsJson,
+      _languagesJson,
       _countriesFile,
-      _subdivisionsFile;
+      _subdivisionsFile,
+      _languagesFile;
+
+  static dynamic _languagesJsonDecoded;
 
   factory Countries(
       {String countriesFile = 'lib/countries.json',
       String subdivisionsFile = 'lib/subdivisions.json',
+      String languagesFile = 'lib/language-codes.json',
       String countriesJson,
-      String subdivisionsJson}) {
+      String subdivisionsJson,
+      String languagesJson}) {
     _countriesJson = countriesJson;
     _subdivisionsJson = subdivisionsJson;
+    _languagesJson = languagesJson;
     _countriesFile = countriesFile;
     _subdivisionsFile = subdivisionsFile;
+    _languagesFile = languagesFile;
 
     return _instance;
   }
 
   BuiltMap<String, CountryData> _countries;
-  BuiltMap<String, SubDivision<String, BuiltList<CountrySubDivision>>> _subdivisions;
+  BuiltMap<String, SubDivision<String, BuiltList<CountrySubDivision>>>
+      _subdivisions;
+  Map<String, Map<String, String>> _languages;
   Map<String, Country> _builtCountries;
 
   Country getCountry(String name) {
@@ -106,6 +119,8 @@ class Countries {
           'Country $name does not exist or Countries has not yet loaded'));
     }
   }
+
+  String getIso639_1(String iso639_3) => (_languages[iso639_3] ?? {})['alpha2'];
 
   Computer _computer;
   Completer _loader;
@@ -122,10 +137,11 @@ class Countries {
       //print('Computer loaded start exec');
       Future loadCountries = _getCountries();
       Future loadSubDivisions = _getSubDivisions();
+      Future loadLanguages = _getLanguages();
 
       //print('execs started, wait...');
 
-      return Future.wait([loadCountries, loadSubDivisions]);
+      return Future.wait([loadCountries, loadSubDivisions, loadLanguages]);
     }).then((val) {
       //print('Waiting done complete loader.');
       _loader.complete();
@@ -160,5 +176,20 @@ class Countries {
     // _subdivisions = _buildSubDivisions(dataString);
     _subdivisions =
         await _computer.compute(_buildSubDivisions, param: dataString);
+  }
+
+  Future<void> _getLanguages() async {
+    //print('Load ${_subdivisionsFile ?? './subdivisions.json'}');
+    var dataString = _languagesJson ??
+        await (File(_languagesFile ?? './language-codes.json').readAsString());
+    //print('compute languages json');
+    // _languages = _buildlanguages(dataString);
+    _languagesJsonDecoded = json.decode(dataString);
+
+    _languages = {};
+
+    _languagesJsonDecoded.forEach((int index, dynamic item) {
+      _languages[item['alpha3-b']] = Map<String, String>.from(item);
+    });
   }
 }
