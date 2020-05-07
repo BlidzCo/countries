@@ -6,4 +6,6 @@ void main() async {
   await countries.loader;
 
   print('Country: ${countries.getCountry('US').name}');
+  print(
+      'Language: ${countries.getIso639_1(countries.getCountry('US').languageIso639_3)}');
 }

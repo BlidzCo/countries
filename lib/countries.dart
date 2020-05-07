@@ -71,6 +71,8 @@ class Country {
   String get name => _countryData.name.common;
   String get language =>
       _countryData.languages[_countryData.languages.keys.first];
+  String get languageIso639_3 => _countryData.languages.keys.first;
+  BuiltMap<String, String> get allLanguages => _countryData.languages;
   String get id => _countryData.cca2;
 }
 
@@ -188,7 +190,7 @@ class Countries {
 
     _languages = {};
 
-    _languagesJsonDecoded.forEach((int index, dynamic item) {
+    List<dynamic>.from(_languagesJsonDecoded).forEach((dynamic item) {
       _languages[item['alpha3-b']] = Map<String, String>.from(item);
     });
   }

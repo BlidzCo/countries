@@ -15,5 +15,6 @@ void main() {
     expect(us.currency, 'USD');
     expect(us.language, 'English');
     expect(us.subDivisions.toList.first.id, 'AK');
+    expect(countries.getIso639_1(us.languageIso639_3), 'en');
   });
 }
