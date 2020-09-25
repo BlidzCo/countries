@@ -15,6 +15,8 @@ import 'package:computer/computer.dart';
 
 export 'src/country_data.dart';
 
+bool _useComputer = Platform.isAndroid || Platform.isIOS;
+
 BuiltMap<String, CountryData> _buildCountries(dataString) {
   List<dynamic> data = json.decode(dataString);
 
@@ -45,8 +47,10 @@ BuiltMap<String, SubDivision<String, BuiltList<CountrySubDivision>>>
 class SubDivision<K, V> extends MapView<K, V> {
   final String country;
 
-  List<CountrySubDivision> get toList =>
-      [for (K key in keys) for (CountrySubDivision item in this[key]) item];
+  List<CountrySubDivision> get toList => [
+        for (K key in keys)
+          for (CountrySubDivision item in this[key]) item
+      ];
 
   SubDivision(Map<K, V> divisions, String country)
       : country = country,
@@ -131,9 +135,16 @@ class Countries {
 
   Countries._internal() {
     _loader = Completer();
+    Future initComputer;
 
-    _computer = Computer();
-    Future initComputer = _computer.turnOn();
+    if (_useComputer) {
+      _computer = Computer();
+      _computer.turnOn();
+    } else {
+      Completer _tmp = Completer();
+      initComputer = _tmp.future;
+      _tmp.complete();
+    }
 
     initComputer.whenComplete(() {
       //print('Computer loaded start exec');
@@ -151,10 +162,12 @@ class Countries {
 
     // loader = ;
 
-    loader.whenComplete(() {
-      //print('loader complete, turn of Computer');
-      _computer.turnOff();
-    });
+    if (_useComputer) {
+      loader.whenComplete(() {
+        //print('loader complete, turn of Computer');
+        _computer.turnOff();
+      });
+    }
   }
 
   Future<void> _getCountries() async {
@@ -163,7 +176,11 @@ class Countries {
         await (File(_countriesFile ?? './countries.json').readAsString());
     //print('compute countries json');
     // _countries = _buildCountries(dataString);
-    _countries = await _computer.compute(_buildCountries, param: dataString);
+    if (_useComputer) {
+      _countries = await _computer.compute(_buildCountries, param: dataString);
+    } else {
+      _countries = _buildCountries(dataString);
+    }
     // List<dynamic> data = await compute(json.decode, dataString);
 
     // BuiltList countryData = deserializeListOf<CountryData>(data);
@@ -176,8 +193,12 @@ class Countries {
         await (File(_subdivisionsFile ?? './subdivisions.json').readAsString());
     //print('compute subdivisions json');
     // _subdivisions = _buildSubDivisions(dataString);
-    _subdivisions =
-        await _computer.compute(_buildSubDivisions, param: dataString);
+    if (_useComputer) {
+      _subdivisions =
+          await _computer.compute(_buildSubDivisions, param: dataString);
+    } else {
+      _subdivisions = _buildSubDivisions(dataString);
+    }
   }
 
   Future<void> _getLanguages() async {
