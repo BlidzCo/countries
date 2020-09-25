@@ -4,7 +4,7 @@
 library countries;
 
 import 'dart:collection';
-import 'dart:io';
+import 'package:universal_io/io.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
@@ -15,7 +15,7 @@ import 'package:computer/computer.dart';
 
 export 'src/country_data.dart';
 
-bool _useComputer = Platform.isAndroid || Platform.isIOS;
+bool _useComputer;
 
 BuiltMap<String, CountryData> _buildCountries(dataString) {
   List<dynamic> data = json.decode(dataString);
@@ -137,11 +137,17 @@ class Countries {
     _loader = Completer();
     Future initComputer;
 
+    try {
+      _useComputer = Platform.isAndroid || Platform.isIOS;
+    } catch (e) {
+      _useComputer = false;
+    }
+
     if (_useComputer) {
       _computer = Computer();
       _computer.turnOn();
     } else {
-      Completer _tmp = Completer();
+      var _tmp = Completer();
       initComputer = _tmp.future;
       _tmp.complete();
     }
