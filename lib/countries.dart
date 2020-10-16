@@ -203,7 +203,7 @@ class Countries {
 
     if (_useComputer) {
       _computer = Computer();
-      _computer.turnOn();
+      initComputer = _computer.turnOn();
     } else {
       var _tmp = Completer();
       initComputer = _tmp.future;

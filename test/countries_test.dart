@@ -28,6 +28,7 @@ void main() {
     var us = await countries.searchByName('United States of America');
 
     expect(us.name, 'United States');
+    expect(us.id, 'US');
     expect(us.currency, 'USD');
     expect(us.language, 'English');
     expect(us.subDivisions.toList.first.id, 'AK');
