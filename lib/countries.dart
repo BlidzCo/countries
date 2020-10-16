@@ -44,6 +44,48 @@ BuiltMap<String, SubDivision<String, BuiltList<CountrySubDivision>>>
   });
 }
 
+String _findCountry(List<dynamic> params) {
+  var _countries = params[0] as BuiltMap<String, CountryData>;
+  var name = params[1] as String;
+  var keys = _countries.keys.toList();
+
+  name = name.toLowerCase();
+
+  var found;
+
+  while (keys.isNotEmpty && found == null) {
+    var key = keys.removeLast();
+    var tmp = _countries[key];
+    if (tmp.name.common.toLowerCase() == name ||
+        tmp.name.official.toLowerCase() == name) {
+      found = key;
+    }
+    if (found == null && tmp.name.native.keys.isNotEmpty) {
+      var nativeNames = tmp.name.native;
+      var nativeKeys = nativeNames.keys.toList();
+      while (nativeKeys.isNotEmpty && found == null) {
+        var nativeKey = nativeKeys.removeLast();
+        var nativeTmp = nativeNames[nativeKey];
+        if (nativeTmp != null &&
+            (nativeTmp.common.toLowerCase() == name ||
+                nativeTmp.official.toLowerCase() == name)) {
+          found = key;
+        }
+      }
+      if (found == null) {
+        var altSpellings = tmp.altSpellings.toList();
+        while (altSpellings.isNotEmpty && found == null) {
+          if (altSpellings.removeLast().toLowerCase() == name) {
+            found = key;
+          }
+        }
+      }
+    }
+  }
+
+  return found;
+}
+
 class SubDivision<K, V> extends MapView<K, V> {
   final String country;
 
@@ -126,6 +168,22 @@ class Countries {
     }
   }
 
+  Future<Country> searchByName(String name) async {
+    String found;
+
+    if (_useComputer) {
+      found = await _computer.compute(_findCountry, param: [_countries, name]);
+    } else {
+      found = _findCountry([_countries, name]);
+    }
+
+    if (found != null) {
+      return getCountry(found);
+    }
+
+    return null;
+  }
+
   String getIso639_1(String iso639_3) => (_languages[iso639_3] ?? {})['alpha2'];
 
   Computer _computer;
@@ -168,12 +226,12 @@ class Countries {
 
     // loader = ;
 
-    if (_useComputer) {
-      loader.whenComplete(() {
-        //print('loader complete, turn of Computer');
-        _computer.turnOff();
-      });
-    }
+    // if (_useComputer) {
+    //   loader.whenComplete(() {
+    //     //print('loader complete, turn of Computer');
+    //     _computer.turnOff();
+    //   });
+    // }
   }
 
   Future<void> _getCountries() async {
