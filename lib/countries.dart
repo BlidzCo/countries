@@ -120,6 +120,25 @@ class Country {
   String get languageIso639_3 => _countryData.languages.keys.first;
   BuiltMap<String, String> get allLanguages => _countryData.languages;
   String get id => _countryData.cca2;
+
+  List<CountrySubDivision> searchSubdivisionByString(String needle) {
+    needle = needle.toLowerCase();
+
+    var subDivTypes = _subDivisionData.keys.toList();
+
+    var found = <CountrySubDivision>[];
+
+    _subDivisionData.forEach((key, subDivList) {
+      subDivList.forEach((CountrySubDivision subdiv) {
+        if (needle.length > 2 && subdiv.name.toLowerCase().contains(needle) ||
+            subdiv.id.toLowerCase().contains(needle)) {
+          found.add(subdiv);
+        }
+      });
+    });
+
+    return found;
+  }
 }
 
 class Countries {
