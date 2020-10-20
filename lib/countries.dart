@@ -8,12 +8,11 @@ import 'package:universal_io/io.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
-import 'package:countries/src/serializers.dart';
-import 'package:countries/src/subdivision_data.dart';
-import 'package:countries/src/country_data.dart';
+import 'src/serializers.dart';
+import 'src/subdivision_data.dart';
+import 'src/country_data.dart';
 import 'package:computer/computer.dart';
-
-export 'src/country_data.dart';
+import 'package:stringmatcher/stringmatcher.dart';
 
 bool _useComputer;
 
@@ -47,17 +46,29 @@ BuiltMap<String, SubDivision<String, BuiltList<CountrySubDivision>>>
 String _findCountry(List<dynamic> params) {
   var _countries = params[0] as BuiltMap<String, CountryData>;
   var name = params[1] as String;
+  var fuzzyMatch = params[2] as bool ?? false;
+  var ratio = params[3] as double ?? 0.5;
   var keys = _countries.keys.toList();
 
   name = name.toLowerCase();
 
   var found;
+  StringMatcher sim;
+
+  if (fuzzyMatch) {
+    sim = StringMatcher(term: Term.char, algorithm: Levenshtein());
+  }
 
   while (keys.isNotEmpty && found == null) {
     var key = keys.removeLast();
     var tmp = _countries[key];
+    var common = tmp.name.common.toLowerCase();
+    var official = tmp.name.official.toLowerCase();
     if (tmp.name.common.toLowerCase() == name ||
-        tmp.name.official.toLowerCase() == name) {
+        tmp.name.official.toLowerCase() == name ||
+        fuzzyMatch &&
+            (sim.similar(common, name).ratio >= ratio ||
+                sim.similar(official, name).ratio >= ratio)) {
       found = key;
     }
     if (found == null && tmp.name.native.keys.isNotEmpty) {
@@ -66,16 +77,23 @@ String _findCountry(List<dynamic> params) {
       while (nativeKeys.isNotEmpty && found == null) {
         var nativeKey = nativeKeys.removeLast();
         var nativeTmp = nativeNames[nativeKey];
+        var common = nativeTmp.common.toLowerCase();
+        var official = nativeTmp.official.toLowerCase();
         if (nativeTmp != null &&
-            (nativeTmp.common.toLowerCase() == name ||
-                nativeTmp.official.toLowerCase() == name)) {
+            (common == name ||
+                official == name ||
+                fuzzyMatch &&
+                    (sim.similar(common, name).ratio >= ratio ||
+                        sim.similar(official, name).ratio >= ratio))) {
           found = key;
         }
       }
       if (found == null) {
         var altSpellings = tmp.altSpellings.toList();
         while (altSpellings.isNotEmpty && found == null) {
-          if (altSpellings.removeLast().toLowerCase() == name) {
+          var item = altSpellings.removeLast().toLowerCase();
+          if (item == name ||
+              fuzzyMatch && sim.similar(name, item).ratio >= ratio) {
             found = key;
           }
         }
@@ -124,13 +142,31 @@ class Country {
   List<CountrySubDivision> searchSubdivisionByString(String needle) {
     needle = needle.toLowerCase();
 
-    var subDivTypes = _subDivisionData.keys.toList();
-
     var found = <CountrySubDivision>[];
 
     _subDivisionData.forEach((key, subDivList) {
       subDivList.forEach((CountrySubDivision subdiv) {
         if (needle.length > 2 && subdiv.name.toLowerCase().contains(needle) ||
+            subdiv.id.toLowerCase().contains(needle)) {
+          found.add(subdiv);
+        }
+      });
+    });
+
+    return found;
+  }
+
+  List<CountrySubDivision> fuzzySearchSubdivisionByString(String needle,
+      [double limit = 0.5]) {
+    needle = needle.toLowerCase();
+
+    var sim = StringMatcher(term: Term.char, algorithm: Levenshtein());
+    var found = <CountrySubDivision>[];
+
+    _subDivisionData.forEach((key, subDivList) {
+      subDivList.forEach((CountrySubDivision subdiv) {
+        var match = sim.similar(needle, subdiv.name).ratio;
+        if (needle.length > 2 && match >= limit ||
             subdiv.id.toLowerCase().contains(needle)) {
           found.add(subdiv);
         }
@@ -187,13 +223,15 @@ class Countries {
     }
   }
 
-  Future<Country> searchByName(String name) async {
+  Future<Country> searchByName(String name,
+      [bool fuzzyMatch = false, double ratio = 0.5]) async {
     String found;
 
     if (_useComputer) {
-      found = await _computer.compute(_findCountry, param: [_countries, name]);
+      found = await _computer
+          .compute(_findCountry, param: [_countries, name, fuzzyMatch, ratio]);
     } else {
-      found = _findCountry([_countries, name]);
+      found = _findCountry([_countries, name, fuzzyMatch, ratio]);
     }
 
     if (found != null) {

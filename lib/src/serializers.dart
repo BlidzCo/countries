@@ -1,9 +1,9 @@
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
-import 'package:countries/src/subdivision_data.dart';
 import 'package:built_collection/built_collection.dart';
 
 import 'country_data.dart';
+import 'subdivision_data.dart';
 
 part 'serializers.g.dart';
 
