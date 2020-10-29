@@ -50,6 +50,10 @@ String _findCountry(List<dynamic> params) {
   var ratio = params[3] as double ?? 0.5;
   var keys = _countries.keys.toList();
 
+  if (name == null || name == '') {
+    throw UnsupportedError('Needle must not be empty');
+  }
+
   name = name.toLowerCase();
 
   var found;
@@ -140,6 +144,10 @@ class Country {
   String get id => _countryData.cca2;
 
   List<CountrySubDivision> searchSubdivisionByString(String needle) {
+    if (needle == null || needle == '') {
+      throw UnsupportedError('Needle must not be empty');
+    }
+
     needle = needle.toLowerCase();
 
     var found = <CountrySubDivision>[];
@@ -158,6 +166,10 @@ class Country {
 
   List<CountrySubDivision> fuzzySearchSubdivisionByString(String needle,
       [double limit = 0.5]) {
+    if (needle == null || needle == '') {
+      throw UnsupportedError('Needle must not be empty');
+    }
+
     needle = needle.toLowerCase();
 
     var sim = StringMatcher(term: Term.char, algorithm: Levenshtein());
@@ -226,6 +238,10 @@ class Countries {
   Future<Country> searchByName(String name,
       [bool fuzzyMatch = false, double ratio = 0.5]) async {
     String found;
+
+    if (name == null || name == '') {
+      throw UnsupportedError('Name must not be empty');
+    }
 
     if (_useComputer) {
       found = await _computer
