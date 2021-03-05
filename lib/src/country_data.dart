@@ -12,7 +12,7 @@ part 'country_data.g.dart';
 abstract class CountryData implements Built<CountryData, CountryDataBuilder> {
   CountryData._();
 
-  factory CountryData([updates(CountryDataBuilder b)]) = _$CountryData;
+  factory CountryData([Function(CountryDataBuilder b) updates]) = _$CountryData;
 
   @BuiltValueField(wireName: 'name')
   CountryName get name;
@@ -77,7 +77,7 @@ abstract class CountryData implements Built<CountryData, CountryDataBuilder> {
 abstract class CountryName implements Built<CountryName, CountryNameBuilder> {
   CountryName._();
 
-  factory CountryName([updates(CountryNameBuilder b)]) = _$CountryName;
+  factory CountryName([Function(CountryNameBuilder b) updates]) = _$CountryName;
 
   @BuiltValueField(wireName: 'common')
   String get common;
@@ -103,7 +103,7 @@ abstract class CountryName implements Built<CountryName, CountryNameBuilder> {
 abstract class Currency implements Built<Currency, CurrencyBuilder> {
   Currency._();
 
-  factory Currency([updates(CurrencyBuilder b)]) = _$Currency;
+  factory Currency([Function(CurrencyBuilder b) updates]) = _$Currency;
 
   @BuiltValueField(wireName: 'name')
   String get name;
@@ -127,7 +127,7 @@ abstract class Currency implements Built<Currency, CurrencyBuilder> {
 abstract class CountryIdd implements Built<CountryIdd, CountryIddBuilder> {
   CountryIdd._();
 
-  factory CountryIdd([updates(CountryIddBuilder b)]) = _$CountryIdd;
+  factory CountryIdd([Function(CountryIddBuilder b) updates]) = _$CountryIdd;
 
   @BuiltValueField(wireName: 'root')
   String get root;
@@ -151,7 +151,7 @@ abstract class CountryNameTranslation
     implements Built<CountryNameTranslation, CountryNameTranslationBuilder> {
   CountryNameTranslation._();
 
-  factory CountryNameTranslation([updates(CountryNameTranslationBuilder b)]) =
+  factory CountryNameTranslation([Function(CountryNameTranslationBuilder b) updates]) =
       _$CountryNameTranslation;
 
   @BuiltValueField(wireName: 'official')

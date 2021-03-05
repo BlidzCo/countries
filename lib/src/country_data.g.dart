@@ -88,16 +88,19 @@ class _$CountryDataSerializer implements StructuredSerializer<CountryData> {
       'flag',
       serializers.serialize(object.flag, specifiedType: const FullType(String)),
     ];
-    if (object.independent != null) {
+    Object value;
+    value = object.independent;
+    if (value != null) {
       result
         ..add('independent')
-        ..add(serializers.serialize(object.independent,
-            specifiedType: const FullType(bool)));
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
     }
-    if (object.demonym != null) {
+    value = object.demonym;
+    if (value != null) {
       result
         ..add('demonym')
-        ..add(serializers.serialize(object.demonym,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -112,7 +115,7 @@ class _$CountryDataSerializer implements StructuredSerializer<CountryData> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name.replace(serializers.deserialize(value,
@@ -260,7 +263,7 @@ class _$CountryNameSerializer implements StructuredSerializer<CountryName> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'common':
           result.common = serializers.deserialize(value,
@@ -313,7 +316,7 @@ class _$CurrencySerializer implements StructuredSerializer<Currency> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -360,7 +363,7 @@ class _$CountryIddSerializer implements StructuredSerializer<CountryIdd> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'root':
           result.root = serializers.deserialize(value,
@@ -415,7 +418,7 @@ class _$CountryNameTranslationSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'official':
           result.official = serializers.deserialize(value,
@@ -505,66 +508,32 @@ class _$CountryData extends CountryData {
       this.area,
       this.flag})
       : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'name');
-    }
-    if (tld == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'tld');
-    }
-    if (cca2 == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'cca2');
-    }
-    if (ccn3 == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'ccn3');
-    }
-    if (cca3 == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'cca3');
-    }
-    if (cioc == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'cioc');
-    }
-    if (status == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'status');
-    }
-    if (currencies == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'currencies');
-    }
-    if (idd == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'idd');
-    }
-    if (capital == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'capital');
-    }
-    if (altSpellings == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'altSpellings');
-    }
-    if (region == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'region');
-    }
-    if (subregion == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'subregion');
-    }
-    if (languages == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'languages');
-    }
-    if (translations == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'translations');
-    }
-    if (latlng == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'latlng');
-    }
-    if (landlocked == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'landlocked');
-    }
-    if (borders == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'borders');
-    }
-    if (area == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'area');
-    }
-    if (flag == null) {
-      throw new BuiltValueNullFieldError('CountryData', 'flag');
-    }
+    BuiltValueNullFieldError.checkNotNull(name, 'CountryData', 'name');
+    BuiltValueNullFieldError.checkNotNull(tld, 'CountryData', 'tld');
+    BuiltValueNullFieldError.checkNotNull(cca2, 'CountryData', 'cca2');
+    BuiltValueNullFieldError.checkNotNull(ccn3, 'CountryData', 'ccn3');
+    BuiltValueNullFieldError.checkNotNull(cca3, 'CountryData', 'cca3');
+    BuiltValueNullFieldError.checkNotNull(cioc, 'CountryData', 'cioc');
+    BuiltValueNullFieldError.checkNotNull(status, 'CountryData', 'status');
+    BuiltValueNullFieldError.checkNotNull(
+        currencies, 'CountryData', 'currencies');
+    BuiltValueNullFieldError.checkNotNull(idd, 'CountryData', 'idd');
+    BuiltValueNullFieldError.checkNotNull(capital, 'CountryData', 'capital');
+    BuiltValueNullFieldError.checkNotNull(
+        altSpellings, 'CountryData', 'altSpellings');
+    BuiltValueNullFieldError.checkNotNull(region, 'CountryData', 'region');
+    BuiltValueNullFieldError.checkNotNull(
+        subregion, 'CountryData', 'subregion');
+    BuiltValueNullFieldError.checkNotNull(
+        languages, 'CountryData', 'languages');
+    BuiltValueNullFieldError.checkNotNull(
+        translations, 'CountryData', 'translations');
+    BuiltValueNullFieldError.checkNotNull(latlng, 'CountryData', 'latlng');
+    BuiltValueNullFieldError.checkNotNull(
+        landlocked, 'CountryData', 'landlocked');
+    BuiltValueNullFieldError.checkNotNull(borders, 'CountryData', 'borders');
+    BuiltValueNullFieldError.checkNotNull(area, 'CountryData', 'area');
+    BuiltValueNullFieldError.checkNotNull(flag, 'CountryData', 'flag');
   }
 
   @override
@@ -778,29 +747,30 @@ class CountryDataBuilder implements Builder<CountryData, CountryDataBuilder> {
   CountryDataBuilder();
 
   CountryDataBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name?.toBuilder();
-      _tld = _$v.tld?.toBuilder();
-      _cca2 = _$v.cca2;
-      _ccn3 = _$v.ccn3;
-      _cca3 = _$v.cca3;
-      _cioc = _$v.cioc;
-      _independent = _$v.independent;
-      _status = _$v.status;
-      _currencies = _$v.currencies?.toBuilder();
-      _idd = _$v.idd?.toBuilder();
-      _capital = _$v.capital?.toBuilder();
-      _altSpellings = _$v.altSpellings?.toBuilder();
-      _region = _$v.region;
-      _subregion = _$v.subregion;
-      _languages = _$v.languages?.toBuilder();
-      _translations = _$v.translations?.toBuilder();
-      _latlng = _$v.latlng?.toBuilder();
-      _demonym = _$v.demonym;
-      _landlocked = _$v.landlocked;
-      _borders = _$v.borders?.toBuilder();
-      _area = _$v.area;
-      _flag = _$v.flag;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name.toBuilder();
+      _tld = $v.tld.toBuilder();
+      _cca2 = $v.cca2;
+      _ccn3 = $v.ccn3;
+      _cca3 = $v.cca3;
+      _cioc = $v.cioc;
+      _independent = $v.independent;
+      _status = $v.status;
+      _currencies = $v.currencies.toBuilder();
+      _idd = $v.idd.toBuilder();
+      _capital = $v.capital.toBuilder();
+      _altSpellings = $v.altSpellings.toBuilder();
+      _region = $v.region;
+      _subregion = $v.subregion;
+      _languages = $v.languages.toBuilder();
+      _translations = $v.translations.toBuilder();
+      _latlng = $v.latlng.toBuilder();
+      _demonym = $v.demonym;
+      _landlocked = $v.landlocked;
+      _borders = $v.borders.toBuilder();
+      _area = $v.area;
+      _flag = $v.flag;
       _$v = null;
     }
     return this;
@@ -808,9 +778,7 @@ class CountryDataBuilder implements Builder<CountryData, CountryDataBuilder> {
 
   @override
   void replace(CountryData other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CountryData;
   }
 
@@ -827,26 +795,36 @@ class CountryDataBuilder implements Builder<CountryData, CountryDataBuilder> {
           new _$CountryData._(
               name: name.build(),
               tld: tld.build(),
-              cca2: cca2,
-              ccn3: ccn3,
-              cca3: cca3,
-              cioc: cioc,
+              cca2: BuiltValueNullFieldError.checkNotNull(
+                  cca2, 'CountryData', 'cca2'),
+              ccn3: BuiltValueNullFieldError.checkNotNull(
+                  ccn3, 'CountryData', 'ccn3'),
+              cca3: BuiltValueNullFieldError.checkNotNull(
+                  cca3, 'CountryData', 'cca3'),
+              cioc: BuiltValueNullFieldError.checkNotNull(
+                  cioc, 'CountryData', 'cioc'),
               independent: independent,
-              status: status,
+              status: BuiltValueNullFieldError.checkNotNull(
+                  status, 'CountryData', 'status'),
               currencies: currencies.build(),
               idd: idd.build(),
               capital: capital.build(),
               altSpellings: altSpellings.build(),
-              region: region,
-              subregion: subregion,
+              region: BuiltValueNullFieldError.checkNotNull(
+                  region, 'CountryData', 'region'),
+              subregion: BuiltValueNullFieldError.checkNotNull(
+                  subregion, 'CountryData', 'subregion'),
               languages: languages.build(),
               translations: translations.build(),
               latlng: latlng.build(),
               demonym: demonym,
-              landlocked: landlocked,
+              landlocked: BuiltValueNullFieldError.checkNotNull(
+                  landlocked, 'CountryData', 'landlocked'),
               borders: borders.build(),
-              area: area,
-              flag: flag);
+              area: BuiltValueNullFieldError.checkNotNull(
+                  area, 'CountryData', 'area'),
+              flag: BuiltValueNullFieldError.checkNotNull(
+                  flag, 'CountryData', 'flag'));
     } catch (_) {
       String _$failedField;
       try {
@@ -896,15 +874,9 @@ class _$CountryName extends CountryName {
       (new CountryNameBuilder()..update(updates)).build();
 
   _$CountryName._({this.common, this.official, this.native}) : super._() {
-    if (common == null) {
-      throw new BuiltValueNullFieldError('CountryName', 'common');
-    }
-    if (official == null) {
-      throw new BuiltValueNullFieldError('CountryName', 'official');
-    }
-    if (native == null) {
-      throw new BuiltValueNullFieldError('CountryName', 'native');
-    }
+    BuiltValueNullFieldError.checkNotNull(common, 'CountryName', 'common');
+    BuiltValueNullFieldError.checkNotNull(official, 'CountryName', 'official');
+    BuiltValueNullFieldError.checkNotNull(native, 'CountryName', 'native');
   }
 
   @override
@@ -959,10 +931,11 @@ class CountryNameBuilder implements Builder<CountryName, CountryNameBuilder> {
   CountryNameBuilder();
 
   CountryNameBuilder get _$this {
-    if (_$v != null) {
-      _common = _$v.common;
-      _official = _$v.official;
-      _native = _$v.native?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _common = $v.common;
+      _official = $v.official;
+      _native = $v.native.toBuilder();
       _$v = null;
     }
     return this;
@@ -970,9 +943,7 @@ class CountryNameBuilder implements Builder<CountryName, CountryNameBuilder> {
 
   @override
   void replace(CountryName other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CountryName;
   }
 
@@ -987,7 +958,11 @@ class CountryNameBuilder implements Builder<CountryName, CountryNameBuilder> {
     try {
       _$result = _$v ??
           new _$CountryName._(
-              common: common, official: official, native: native.build());
+              common: BuiltValueNullFieldError.checkNotNull(
+                  common, 'CountryName', 'common'),
+              official: BuiltValueNullFieldError.checkNotNull(
+                  official, 'CountryName', 'official'),
+              native: native.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -1014,12 +989,8 @@ class _$Currency extends Currency {
       (new CurrencyBuilder()..update(updates)).build();
 
   _$Currency._({this.name, this.symbol}) : super._() {
-    if (name == null) {
-      throw new BuiltValueNullFieldError('Currency', 'name');
-    }
-    if (symbol == null) {
-      throw new BuiltValueNullFieldError('Currency', 'symbol');
-    }
+    BuiltValueNullFieldError.checkNotNull(name, 'Currency', 'name');
+    BuiltValueNullFieldError.checkNotNull(symbol, 'Currency', 'symbol');
   }
 
   @override
@@ -1063,9 +1034,10 @@ class CurrencyBuilder implements Builder<Currency, CurrencyBuilder> {
   CurrencyBuilder();
 
   CurrencyBuilder get _$this {
-    if (_$v != null) {
-      _name = _$v.name;
-      _symbol = _$v.symbol;
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _symbol = $v.symbol;
       _$v = null;
     }
     return this;
@@ -1073,9 +1045,7 @@ class CurrencyBuilder implements Builder<Currency, CurrencyBuilder> {
 
   @override
   void replace(Currency other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$Currency;
   }
 
@@ -1086,7 +1056,12 @@ class CurrencyBuilder implements Builder<Currency, CurrencyBuilder> {
 
   @override
   _$Currency build() {
-    final _$result = _$v ?? new _$Currency._(name: name, symbol: symbol);
+    final _$result = _$v ??
+        new _$Currency._(
+            name:
+                BuiltValueNullFieldError.checkNotNull(name, 'Currency', 'name'),
+            symbol: BuiltValueNullFieldError.checkNotNull(
+                symbol, 'Currency', 'symbol'));
     replace(_$result);
     return _$result;
   }
@@ -1102,12 +1077,8 @@ class _$CountryIdd extends CountryIdd {
       (new CountryIddBuilder()..update(updates)).build();
 
   _$CountryIdd._({this.root, this.suffixes}) : super._() {
-    if (root == null) {
-      throw new BuiltValueNullFieldError('CountryIdd', 'root');
-    }
-    if (suffixes == null) {
-      throw new BuiltValueNullFieldError('CountryIdd', 'suffixes');
-    }
+    BuiltValueNullFieldError.checkNotNull(root, 'CountryIdd', 'root');
+    BuiltValueNullFieldError.checkNotNull(suffixes, 'CountryIdd', 'suffixes');
   }
 
   @override
@@ -1154,9 +1125,10 @@ class CountryIddBuilder implements Builder<CountryIdd, CountryIddBuilder> {
   CountryIddBuilder();
 
   CountryIddBuilder get _$this {
-    if (_$v != null) {
-      _root = _$v.root;
-      _suffixes = _$v.suffixes?.toBuilder();
+    final $v = _$v;
+    if ($v != null) {
+      _root = $v.root;
+      _suffixes = $v.suffixes.toBuilder();
       _$v = null;
     }
     return this;
@@ -1164,9 +1136,7 @@ class CountryIddBuilder implements Builder<CountryIdd, CountryIddBuilder> {
 
   @override
   void replace(CountryIdd other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CountryIdd;
   }
 
@@ -1179,8 +1149,11 @@ class CountryIddBuilder implements Builder<CountryIdd, CountryIddBuilder> {
   _$CountryIdd build() {
     _$CountryIdd _$result;
     try {
-      _$result =
-          _$v ?? new _$CountryIdd._(root: root, suffixes: suffixes.build());
+      _$result = _$v ??
+          new _$CountryIdd._(
+              root: BuiltValueNullFieldError.checkNotNull(
+                  root, 'CountryIdd', 'root'),
+              suffixes: suffixes.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -1208,12 +1181,10 @@ class _$CountryNameTranslation extends CountryNameTranslation {
       (new CountryNameTranslationBuilder()..update(updates)).build();
 
   _$CountryNameTranslation._({this.official, this.common}) : super._() {
-    if (official == null) {
-      throw new BuiltValueNullFieldError('CountryNameTranslation', 'official');
-    }
-    if (common == null) {
-      throw new BuiltValueNullFieldError('CountryNameTranslation', 'common');
-    }
+    BuiltValueNullFieldError.checkNotNull(
+        official, 'CountryNameTranslation', 'official');
+    BuiltValueNullFieldError.checkNotNull(
+        common, 'CountryNameTranslation', 'common');
   }
 
   @override
@@ -1262,9 +1233,10 @@ class CountryNameTranslationBuilder
   CountryNameTranslationBuilder();
 
   CountryNameTranslationBuilder get _$this {
-    if (_$v != null) {
-      _official = _$v.official;
-      _common = _$v.common;
+    final $v = _$v;
+    if ($v != null) {
+      _official = $v.official;
+      _common = $v.common;
       _$v = null;
     }
     return this;
@@ -1272,9 +1244,7 @@ class CountryNameTranslationBuilder
 
   @override
   void replace(CountryNameTranslation other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CountryNameTranslation;
   }
 
@@ -1286,7 +1256,11 @@ class CountryNameTranslationBuilder
   @override
   _$CountryNameTranslation build() {
     final _$result = _$v ??
-        new _$CountryNameTranslation._(official: official, common: common);
+        new _$CountryNameTranslation._(
+            official: BuiltValueNullFieldError.checkNotNull(
+                official, 'CountryNameTranslation', 'official'),
+            common: BuiltValueNullFieldError.checkNotNull(
+                common, 'CountryNameTranslation', 'common'));
     replace(_$result);
     return _$result;
   }

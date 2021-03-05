@@ -25,10 +25,12 @@ class _$CountrySubDivisionSerializer
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
     ];
-    if (object.type != null) {
+    Object value;
+    value = object.type;
+    if (value != null) {
       result
         ..add('type')
-        ..add(serializers.serialize(object.type,
+        ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
     return result;
@@ -44,7 +46,7 @@ class _$CountrySubDivisionSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
@@ -78,12 +80,8 @@ class _$CountrySubDivision extends CountrySubDivision {
       (new CountrySubDivisionBuilder()..update(updates)).build();
 
   _$CountrySubDivision._({this.id, this.name, this.type}) : super._() {
-    if (id == null) {
-      throw new BuiltValueNullFieldError('CountrySubDivision', 'id');
-    }
-    if (name == null) {
-      throw new BuiltValueNullFieldError('CountrySubDivision', 'name');
-    }
+    BuiltValueNullFieldError.checkNotNull(id, 'CountrySubDivision', 'id');
+    BuiltValueNullFieldError.checkNotNull(name, 'CountrySubDivision', 'name');
   }
 
   @override
@@ -138,10 +136,11 @@ class CountrySubDivisionBuilder
   CountrySubDivisionBuilder();
 
   CountrySubDivisionBuilder get _$this {
-    if (_$v != null) {
-      _id = _$v.id;
-      _name = _$v.name;
-      _type = _$v.type;
+    final $v = _$v;
+    if ($v != null) {
+      _id = $v.id;
+      _name = $v.name;
+      _type = $v.type;
       _$v = null;
     }
     return this;
@@ -149,9 +148,7 @@ class CountrySubDivisionBuilder
 
   @override
   void replace(CountrySubDivision other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CountrySubDivision;
   }
 
@@ -162,8 +159,13 @@ class CountrySubDivisionBuilder
 
   @override
   _$CountrySubDivision build() {
-    final _$result =
-        _$v ?? new _$CountrySubDivision._(id: id, name: name, type: type);
+    final _$result = _$v ??
+        new _$CountrySubDivision._(
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, 'CountrySubDivision', 'id'),
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, 'CountrySubDivision', 'name'),
+            type: type);
     replace(_$result);
     return _$result;
   }

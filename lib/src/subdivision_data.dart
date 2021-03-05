@@ -316,7 +316,7 @@ abstract class CountrySubDivision
     implements Built<CountrySubDivision, CountrySubDivisionBuilder> {
   CountrySubDivision._();
 
-  factory CountrySubDivision([updates(CountrySubDivisionBuilder b)]) =
+  factory CountrySubDivision([Function(CountrySubDivisionBuilder b) updates]) =
       _$CountrySubDivision;
 
   @BuiltValueField(wireName: 'id')

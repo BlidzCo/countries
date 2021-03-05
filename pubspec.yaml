@@ -4,12 +4,12 @@ version: 0.1.0
 homepage: https://github.com/mathatan/countriesm
 
 environment:
-  sdk: '>=2.7.0 <3.0.0'
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  built_value: ^7.0.9
+  built_value: ^8.0.0
   computer: ^1.0.2
-  build: ^1.2.2
+  build: ^1.6.2
   universal_io: ^1.0.1
   stringmatcher: ^1.0.0
 
@@ -21,4 +21,4 @@ dev_dependencies:
   test: ^1.6.0
   build_runner: ^1.7.4
   source_gen: ^0.9.4+7
-  built_value_generator: ^7.0.9
+  built_value_generator: ^8.0.0
