@@ -1,2 +1,4 @@
 name: countries_example
 description: Demonstrates how to use the countries library.
+environment:
+  sdk: ">=2.10.0 <3.0.0"
