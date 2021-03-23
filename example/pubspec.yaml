@@ -1,4 +1,8 @@
 name: countries_example
 description: Demonstrates how to use the countries library.
 environment:
-  sdk: ">=2.10.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
+
+dev_dependencies:
+  countries:
+    path: ../

@@ -1,11 +1,11 @@
 import 'package:countries/countries.dart';
 
-void main() async {
-  var countries = Countries();
+Future main() async {
+  final countries = Countries();
 
   await countries.loader;
 
-  print('Country: ${countries.getCountry('US').name}');
+  print('Country: ${countries.getCountry('US')!.name}');
   print(
-      'Language: ${countries.getIso639_1(countries.getCountry('US').languageIso639_3)}');
+      'Language: ${countries.getIso639_1(countries.getCountry('US')!.languageIso639_3)}');
 }

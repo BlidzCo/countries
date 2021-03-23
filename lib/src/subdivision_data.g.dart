@@ -17,15 +17,16 @@ class _$CountrySubDivisionSerializer
   final String wireName = 'CountrySubDivision';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, CountrySubDivision object,
+  Iterable<Object?> serialize(
+      Serializers serializers, CountrySubDivision object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.type;
     if (value != null) {
       result
@@ -38,7 +39,7 @@ class _$CountrySubDivisionSerializer
 
   @override
   CountrySubDivision deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CountrySubDivisionBuilder();
 
@@ -46,7 +47,7 @@ class _$CountrySubDivisionSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
@@ -73,13 +74,14 @@ class _$CountrySubDivision extends CountrySubDivision {
   @override
   final String name;
   @override
-  final String type;
+  final String? type;
 
   factory _$CountrySubDivision(
-          [void Function(CountrySubDivisionBuilder) updates]) =>
+          [void Function(CountrySubDivisionBuilder)? updates]) =>
       (new CountrySubDivisionBuilder()..update(updates)).build();
 
-  _$CountrySubDivision._({this.id, this.name, this.type}) : super._() {
+  _$CountrySubDivision._({required this.id, required this.name, this.type})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(id, 'CountrySubDivision', 'id');
     BuiltValueNullFieldError.checkNotNull(name, 'CountrySubDivision', 'name');
   }
@@ -119,19 +121,19 @@ class _$CountrySubDivision extends CountrySubDivision {
 
 class CountrySubDivisionBuilder
     implements Builder<CountrySubDivision, CountrySubDivisionBuilder> {
-  _$CountrySubDivision _$v;
+  _$CountrySubDivision? _$v;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  String _type;
-  String get type => _$this._type;
-  set type(String type) => _$this._type = type;
+  String? _type;
+  String? get type => _$this._type;
+  set type(String? type) => _$this._type = type;
 
   CountrySubDivisionBuilder();
 
@@ -153,7 +155,7 @@ class CountrySubDivisionBuilder
   }
 
   @override
-  void update(void Function(CountrySubDivisionBuilder) updates) {
+  void update(void Function(CountrySubDivisionBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

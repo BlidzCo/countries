@@ -4,14 +4,14 @@ import 'package:test/test.dart';
 void main() {
   test('Test fetching a country', () async {
     print('Start test');
-    var countries = Countries();
+    final countries = Countries();
 
     print('Await loader');
     await countries.loader;
 
-    var us = countries.getCountry('US');
+    final us = countries.getCountry('US');
 
-    expect(us.name, 'United States');
+    expect(us!.name, 'United States');
     expect(us.currency, 'USD');
     expect(us.language, 'English');
     expect(us.subDivisions.toList.first.id, 'AK');
@@ -20,22 +20,22 @@ void main() {
 
   test('Test finding a country', () async {
     print('Start test');
-    var countries = Countries();
+    final countries = Countries();
 
     print('Await loader');
     await countries.loader;
 
-    var us = await countries.searchByName('United States of America');
-    var fi = await countries.searchByName('soomi', true, 0.75);
+    final us = await countries.searchByName('United States of America');
+    final fi = await countries.searchByName('soomi', true, 0.75);
 
-    expect(us.name, 'United States');
+    expect(us!.name, 'United States');
     expect(us.id, 'US');
     expect(us.currency, 'USD');
     expect(us.language, 'English');
     expect(us.subDivisions.toList.first.id, 'AK');
     expect(countries.getIso639_1(us.languageIso639_3), 'en');
 
-    expect(fi.name, 'Finland');
+    expect(fi!.name, 'Finland');
     expect(fi.id, 'FI');
     expect(fi.currency, 'EUR');
     expect(fi.language, 'Finnish');
@@ -45,14 +45,14 @@ void main() {
 
   test('Test finding a subdivision', () async {
     print('Start test');
-    var countries = Countries();
+    final countries = Countries();
 
     print('Await loader');
     await countries.loader;
 
-    var us = countries.getCountry('US');
-    var ca = us.searchSubdivisionByString('California')[0];
-    var caf = us.fuzzySearchSubdivisionByString('Calfor', 0.5)[0];
+    final us = countries.getCountry('US');
+    final ca = us!.searchSubdivisionByString('California')[0];
+    final caf = us.fuzzySearchSubdivisionByString('Calfor', 0.5)[0];
 
     expect(us.name, 'United States');
     expect(us.currency, 'USD');

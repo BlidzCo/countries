@@ -27,8 +27,7 @@ abstract class CountryData implements Built<CountryData, CountryDataBuilder> {
   @BuiltValueField(wireName: 'cioc')
   String get cioc;
   @BuiltValueField(wireName: 'independent')
-  @nullable
-  bool get independent;
+  bool? get independent;
   @BuiltValueField(wireName: 'status')
   String get status;
   @BuiltValueField(wireName: 'currencies')
@@ -50,8 +49,7 @@ abstract class CountryData implements Built<CountryData, CountryDataBuilder> {
   @BuiltValueField(wireName: 'latlng')
   BuiltList<double> get latlng;
   @BuiltValueField(wireName: 'demonym')
-  @nullable
-  String get demonym;
+  String? get demonym;
   @BuiltValueField(wireName: 'landlocked')
   bool get landlocked;
   @BuiltValueField(wireName: 'borders')
@@ -64,7 +62,7 @@ abstract class CountryData implements Built<CountryData, CountryDataBuilder> {
     return json.encode(serializers.serializeWith(CountryData.serializer, this));
   }
 
-  static CountryData fromJson(String jsonString) {
+  static CountryData? fromJson(String jsonString) {
     return serializers.deserializeWith(
         CountryData.serializer, json.decode(jsonString));
   }
@@ -89,7 +87,7 @@ abstract class CountryName implements Built<CountryName, CountryNameBuilder> {
     return json.encode(serializers.serializeWith(CountryName.serializer, this));
   }
 
-  static CountryName fromJson(String jsonString) {
+  static CountryName? fromJson(String jsonString) {
     return serializers.deserializeWith(
         CountryName.serializer, json.decode(jsonString));
   }
@@ -113,7 +111,7 @@ abstract class Currency implements Built<Currency, CurrencyBuilder> {
     return json.encode(serializers.serializeWith(Currency.serializer, this));
   }
 
-  static Currency fromJson(String jsonString) {
+  static Currency? fromJson(String jsonString) {
     return serializers.deserializeWith(
         Currency.serializer, json.decode(jsonString));
   }
@@ -137,8 +135,9 @@ abstract class CountryIdd implements Built<CountryIdd, CountryIddBuilder> {
     return json.encode(serializers.serializeWith(CountryIdd.serializer, this));
   }
 
-  static CountryIdd fromJson(String jsonString) {
-    return serializers.deserializeWith(CountryIdd.serializer, json.decode(jsonString));
+  static CountryIdd? fromJson(String jsonString) {
+    return serializers.deserializeWith(
+        CountryIdd.serializer, json.decode(jsonString));
   }
 
   static Serializer<CountryIdd> get serializer => _$countryIddSerializer;
@@ -151,7 +150,8 @@ abstract class CountryNameTranslation
     implements Built<CountryNameTranslation, CountryNameTranslationBuilder> {
   CountryNameTranslation._();
 
-  factory CountryNameTranslation([Function(CountryNameTranslationBuilder b) updates]) =
+  factory CountryNameTranslation(
+          [Function(CountryNameTranslationBuilder b) updates]) =
       _$CountryNameTranslation;
 
   @BuiltValueField(wireName: 'official')
@@ -164,7 +164,7 @@ abstract class CountryNameTranslation
         serializers.serializeWith(CountryNameTranslation.serializer, this));
   }
 
-  static CountryNameTranslation fromJson(String jsonString) {
+  static CountryNameTranslation? fromJson(String jsonString) {
     return serializers.deserializeWith(
         CountryNameTranslation.serializer, json.decode(jsonString));
   }

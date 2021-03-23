@@ -20,9 +20,9 @@ class _$CountryDataSerializer implements StructuredSerializer<CountryData> {
   final String wireName = 'CountryData';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, CountryData object,
+  Iterable<Object?> serialize(Serializers serializers, CountryData object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'name',
       serializers.serialize(object.name,
           specifiedType: const FullType(CountryName)),
@@ -88,7 +88,7 @@ class _$CountryDataSerializer implements StructuredSerializer<CountryData> {
       'flag',
       serializers.serialize(object.flag, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.independent;
     if (value != null) {
       result
@@ -107,7 +107,7 @@ class _$CountryDataSerializer implements StructuredSerializer<CountryData> {
   }
 
   @override
-  CountryData deserialize(Serializers serializers, Iterable<Object> serialized,
+  CountryData deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CountryDataBuilder();
 
@@ -115,16 +115,16 @@ class _$CountryDataSerializer implements StructuredSerializer<CountryData> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'name':
           result.name.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CountryName)) as CountryName);
+              specifiedType: const FullType(CountryName))! as CountryName);
           break;
         case 'tld':
           result.tld.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
               as BuiltList<Object>);
           break;
         case 'cca2':
@@ -154,22 +154,22 @@ class _$CountryDataSerializer implements StructuredSerializer<CountryData> {
         case 'currencies':
           result.currencies.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(Currency)])));
+                  const [const FullType(String), const FullType(Currency)]))!);
           break;
         case 'idd':
           result.idd.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CountryIdd)) as CountryIdd);
+              specifiedType: const FullType(CountryIdd))! as CountryIdd);
           break;
         case 'capital':
           result.capital.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
               as BuiltList<Object>);
           break;
         case 'altSpellings':
           result.altSpellings.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
               as BuiltList<Object>);
           break;
         case 'region':
@@ -183,19 +183,19 @@ class _$CountryDataSerializer implements StructuredSerializer<CountryData> {
         case 'languages':
           result.languages.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(String)])));
+                  const [const FullType(String), const FullType(String)]))!);
           break;
         case 'translations':
           result.translations.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(CountryNameTranslation)
-              ])));
+              ]))!);
           break;
         case 'latlng':
           result.latlng.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(double)]))
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(double)]))!
               as BuiltList<Object>);
           break;
         case 'demonym':
@@ -208,8 +208,8 @@ class _$CountryDataSerializer implements StructuredSerializer<CountryData> {
           break;
         case 'borders':
           result.borders.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
               as BuiltList<Object>);
           break;
         case 'area':
@@ -234,9 +234,9 @@ class _$CountryNameSerializer implements StructuredSerializer<CountryName> {
   final String wireName = 'CountryName';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, CountryName object,
+  Iterable<Object?> serialize(Serializers serializers, CountryName object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'common',
       serializers.serialize(object.common,
           specifiedType: const FullType(String)),
@@ -255,7 +255,7 @@ class _$CountryNameSerializer implements StructuredSerializer<CountryName> {
   }
 
   @override
-  CountryName deserialize(Serializers serializers, Iterable<Object> serialized,
+  CountryName deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CountryNameBuilder();
 
@@ -263,7 +263,7 @@ class _$CountryNameSerializer implements StructuredSerializer<CountryName> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'common':
           result.common = serializers.deserialize(value,
@@ -278,7 +278,7 @@ class _$CountryNameSerializer implements StructuredSerializer<CountryName> {
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(CountryNameTranslation)
-              ])));
+              ]))!);
           break;
       }
     }
@@ -294,9 +294,9 @@ class _$CurrencySerializer implements StructuredSerializer<Currency> {
   final String wireName = 'Currency';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, Currency object,
+  Iterable<Object?> serialize(Serializers serializers, Currency object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'symbol',
@@ -308,7 +308,7 @@ class _$CurrencySerializer implements StructuredSerializer<Currency> {
   }
 
   @override
-  Currency deserialize(Serializers serializers, Iterable<Object> serialized,
+  Currency deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CurrencyBuilder();
 
@@ -316,7 +316,7 @@ class _$CurrencySerializer implements StructuredSerializer<Currency> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
@@ -340,9 +340,9 @@ class _$CountryIddSerializer implements StructuredSerializer<CountryIdd> {
   final String wireName = 'CountryIdd';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, CountryIdd object,
+  Iterable<Object?> serialize(Serializers serializers, CountryIdd object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'root',
       serializers.serialize(object.root, specifiedType: const FullType(String)),
       'suffixes',
@@ -355,7 +355,7 @@ class _$CountryIddSerializer implements StructuredSerializer<CountryIdd> {
   }
 
   @override
-  CountryIdd deserialize(Serializers serializers, Iterable<Object> serialized,
+  CountryIdd deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CountryIddBuilder();
 
@@ -363,7 +363,7 @@ class _$CountryIddSerializer implements StructuredSerializer<CountryIdd> {
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'root':
           result.root = serializers.deserialize(value,
@@ -371,8 +371,8 @@ class _$CountryIddSerializer implements StructuredSerializer<CountryIdd> {
           break;
         case 'suffixes':
           result.suffixes.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
               as BuiltList<Object>);
           break;
       }
@@ -393,10 +393,10 @@ class _$CountryNameTranslationSerializer
   final String wireName = 'CountryNameTranslation';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, CountryNameTranslation object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'official',
       serializers.serialize(object.official,
           specifiedType: const FullType(String)),
@@ -410,7 +410,7 @@ class _$CountryNameTranslationSerializer
 
   @override
   CountryNameTranslation deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CountryNameTranslationBuilder();
 
@@ -418,7 +418,7 @@ class _$CountryNameTranslationSerializer
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'official':
           result.official = serializers.deserialize(value,
@@ -449,7 +449,7 @@ class _$CountryData extends CountryData {
   @override
   final String cioc;
   @override
-  final bool independent;
+  final bool? independent;
   @override
   final String status;
   @override
@@ -471,7 +471,7 @@ class _$CountryData extends CountryData {
   @override
   final BuiltList<double> latlng;
   @override
-  final String demonym;
+  final String? demonym;
   @override
   final bool landlocked;
   @override
@@ -481,32 +481,32 @@ class _$CountryData extends CountryData {
   @override
   final String flag;
 
-  factory _$CountryData([void Function(CountryDataBuilder) updates]) =>
+  factory _$CountryData([void Function(CountryDataBuilder)? updates]) =>
       (new CountryDataBuilder()..update(updates)).build();
 
   _$CountryData._(
-      {this.name,
-      this.tld,
-      this.cca2,
-      this.ccn3,
-      this.cca3,
-      this.cioc,
+      {required this.name,
+      required this.tld,
+      required this.cca2,
+      required this.ccn3,
+      required this.cca3,
+      required this.cioc,
       this.independent,
-      this.status,
-      this.currencies,
-      this.idd,
-      this.capital,
-      this.altSpellings,
-      this.region,
-      this.subregion,
-      this.languages,
-      this.translations,
-      this.latlng,
+      required this.status,
+      required this.currencies,
+      required this.idd,
+      required this.capital,
+      required this.altSpellings,
+      required this.region,
+      required this.subregion,
+      required this.languages,
+      required this.translations,
+      required this.latlng,
       this.demonym,
-      this.landlocked,
-      this.borders,
-      this.area,
-      this.flag})
+      required this.landlocked,
+      required this.borders,
+      required this.area,
+      required this.flag})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, 'CountryData', 'name');
     BuiltValueNullFieldError.checkNotNull(tld, 'CountryData', 'tld');
@@ -643,106 +643,106 @@ class _$CountryData extends CountryData {
 }
 
 class CountryDataBuilder implements Builder<CountryData, CountryDataBuilder> {
-  _$CountryData _$v;
+  _$CountryData? _$v;
 
-  CountryNameBuilder _name;
+  CountryNameBuilder? _name;
   CountryNameBuilder get name => _$this._name ??= new CountryNameBuilder();
-  set name(CountryNameBuilder name) => _$this._name = name;
+  set name(CountryNameBuilder? name) => _$this._name = name;
 
-  ListBuilder<String> _tld;
+  ListBuilder<String>? _tld;
   ListBuilder<String> get tld => _$this._tld ??= new ListBuilder<String>();
-  set tld(ListBuilder<String> tld) => _$this._tld = tld;
+  set tld(ListBuilder<String>? tld) => _$this._tld = tld;
 
-  String _cca2;
-  String get cca2 => _$this._cca2;
-  set cca2(String cca2) => _$this._cca2 = cca2;
+  String? _cca2;
+  String? get cca2 => _$this._cca2;
+  set cca2(String? cca2) => _$this._cca2 = cca2;
 
-  String _ccn3;
-  String get ccn3 => _$this._ccn3;
-  set ccn3(String ccn3) => _$this._ccn3 = ccn3;
+  String? _ccn3;
+  String? get ccn3 => _$this._ccn3;
+  set ccn3(String? ccn3) => _$this._ccn3 = ccn3;
 
-  String _cca3;
-  String get cca3 => _$this._cca3;
-  set cca3(String cca3) => _$this._cca3 = cca3;
+  String? _cca3;
+  String? get cca3 => _$this._cca3;
+  set cca3(String? cca3) => _$this._cca3 = cca3;
 
-  String _cioc;
-  String get cioc => _$this._cioc;
-  set cioc(String cioc) => _$this._cioc = cioc;
+  String? _cioc;
+  String? get cioc => _$this._cioc;
+  set cioc(String? cioc) => _$this._cioc = cioc;
 
-  bool _independent;
-  bool get independent => _$this._independent;
-  set independent(bool independent) => _$this._independent = independent;
+  bool? _independent;
+  bool? get independent => _$this._independent;
+  set independent(bool? independent) => _$this._independent = independent;
 
-  String _status;
-  String get status => _$this._status;
-  set status(String status) => _$this._status = status;
+  String? _status;
+  String? get status => _$this._status;
+  set status(String? status) => _$this._status = status;
 
-  MapBuilder<String, Currency> _currencies;
+  MapBuilder<String, Currency>? _currencies;
   MapBuilder<String, Currency> get currencies =>
       _$this._currencies ??= new MapBuilder<String, Currency>();
-  set currencies(MapBuilder<String, Currency> currencies) =>
+  set currencies(MapBuilder<String, Currency>? currencies) =>
       _$this._currencies = currencies;
 
-  CountryIddBuilder _idd;
+  CountryIddBuilder? _idd;
   CountryIddBuilder get idd => _$this._idd ??= new CountryIddBuilder();
-  set idd(CountryIddBuilder idd) => _$this._idd = idd;
+  set idd(CountryIddBuilder? idd) => _$this._idd = idd;
 
-  ListBuilder<String> _capital;
+  ListBuilder<String>? _capital;
   ListBuilder<String> get capital =>
       _$this._capital ??= new ListBuilder<String>();
-  set capital(ListBuilder<String> capital) => _$this._capital = capital;
+  set capital(ListBuilder<String>? capital) => _$this._capital = capital;
 
-  ListBuilder<String> _altSpellings;
+  ListBuilder<String>? _altSpellings;
   ListBuilder<String> get altSpellings =>
       _$this._altSpellings ??= new ListBuilder<String>();
-  set altSpellings(ListBuilder<String> altSpellings) =>
+  set altSpellings(ListBuilder<String>? altSpellings) =>
       _$this._altSpellings = altSpellings;
 
-  String _region;
-  String get region => _$this._region;
-  set region(String region) => _$this._region = region;
+  String? _region;
+  String? get region => _$this._region;
+  set region(String? region) => _$this._region = region;
 
-  String _subregion;
-  String get subregion => _$this._subregion;
-  set subregion(String subregion) => _$this._subregion = subregion;
+  String? _subregion;
+  String? get subregion => _$this._subregion;
+  set subregion(String? subregion) => _$this._subregion = subregion;
 
-  MapBuilder<String, String> _languages;
+  MapBuilder<String, String>? _languages;
   MapBuilder<String, String> get languages =>
       _$this._languages ??= new MapBuilder<String, String>();
-  set languages(MapBuilder<String, String> languages) =>
+  set languages(MapBuilder<String, String>? languages) =>
       _$this._languages = languages;
 
-  MapBuilder<String, CountryNameTranslation> _translations;
+  MapBuilder<String, CountryNameTranslation>? _translations;
   MapBuilder<String, CountryNameTranslation> get translations =>
       _$this._translations ??= new MapBuilder<String, CountryNameTranslation>();
-  set translations(MapBuilder<String, CountryNameTranslation> translations) =>
+  set translations(MapBuilder<String, CountryNameTranslation>? translations) =>
       _$this._translations = translations;
 
-  ListBuilder<double> _latlng;
+  ListBuilder<double>? _latlng;
   ListBuilder<double> get latlng =>
       _$this._latlng ??= new ListBuilder<double>();
-  set latlng(ListBuilder<double> latlng) => _$this._latlng = latlng;
+  set latlng(ListBuilder<double>? latlng) => _$this._latlng = latlng;
 
-  String _demonym;
-  String get demonym => _$this._demonym;
-  set demonym(String demonym) => _$this._demonym = demonym;
+  String? _demonym;
+  String? get demonym => _$this._demonym;
+  set demonym(String? demonym) => _$this._demonym = demonym;
 
-  bool _landlocked;
-  bool get landlocked => _$this._landlocked;
-  set landlocked(bool landlocked) => _$this._landlocked = landlocked;
+  bool? _landlocked;
+  bool? get landlocked => _$this._landlocked;
+  set landlocked(bool? landlocked) => _$this._landlocked = landlocked;
 
-  ListBuilder<String> _borders;
+  ListBuilder<String>? _borders;
   ListBuilder<String> get borders =>
       _$this._borders ??= new ListBuilder<String>();
-  set borders(ListBuilder<String> borders) => _$this._borders = borders;
+  set borders(ListBuilder<String>? borders) => _$this._borders = borders;
 
-  double _area;
-  double get area => _$this._area;
-  set area(double area) => _$this._area = area;
+  double? _area;
+  double? get area => _$this._area;
+  set area(double? area) => _$this._area = area;
 
-  String _flag;
-  String get flag => _$this._flag;
-  set flag(String flag) => _$this._flag = flag;
+  String? _flag;
+  String? get flag => _$this._flag;
+  set flag(String? flag) => _$this._flag = flag;
 
   CountryDataBuilder();
 
@@ -783,7 +783,7 @@ class CountryDataBuilder implements Builder<CountryData, CountryDataBuilder> {
   }
 
   @override
-  void update(void Function(CountryDataBuilder) updates) {
+  void update(void Function(CountryDataBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -826,7 +826,7 @@ class CountryDataBuilder implements Builder<CountryData, CountryDataBuilder> {
               flag: BuiltValueNullFieldError.checkNotNull(
                   flag, 'CountryData', 'flag'));
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'name';
         name.build();
@@ -870,10 +870,12 @@ class _$CountryName extends CountryName {
   @override
   final BuiltMap<String, CountryNameTranslation> native;
 
-  factory _$CountryName([void Function(CountryNameBuilder) updates]) =>
+  factory _$CountryName([void Function(CountryNameBuilder)? updates]) =>
       (new CountryNameBuilder()..update(updates)).build();
 
-  _$CountryName._({this.common, this.official, this.native}) : super._() {
+  _$CountryName._(
+      {required this.common, required this.official, required this.native})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(common, 'CountryName', 'common');
     BuiltValueNullFieldError.checkNotNull(official, 'CountryName', 'official');
     BuiltValueNullFieldError.checkNotNull(native, 'CountryName', 'native');
@@ -912,20 +914,20 @@ class _$CountryName extends CountryName {
 }
 
 class CountryNameBuilder implements Builder<CountryName, CountryNameBuilder> {
-  _$CountryName _$v;
+  _$CountryName? _$v;
 
-  String _common;
-  String get common => _$this._common;
-  set common(String common) => _$this._common = common;
+  String? _common;
+  String? get common => _$this._common;
+  set common(String? common) => _$this._common = common;
 
-  String _official;
-  String get official => _$this._official;
-  set official(String official) => _$this._official = official;
+  String? _official;
+  String? get official => _$this._official;
+  set official(String? official) => _$this._official = official;
 
-  MapBuilder<String, CountryNameTranslation> _native;
+  MapBuilder<String, CountryNameTranslation>? _native;
   MapBuilder<String, CountryNameTranslation> get native =>
       _$this._native ??= new MapBuilder<String, CountryNameTranslation>();
-  set native(MapBuilder<String, CountryNameTranslation> native) =>
+  set native(MapBuilder<String, CountryNameTranslation>? native) =>
       _$this._native = native;
 
   CountryNameBuilder();
@@ -948,7 +950,7 @@ class CountryNameBuilder implements Builder<CountryName, CountryNameBuilder> {
   }
 
   @override
-  void update(void Function(CountryNameBuilder) updates) {
+  void update(void Function(CountryNameBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -964,7 +966,7 @@ class CountryNameBuilder implements Builder<CountryName, CountryNameBuilder> {
                   official, 'CountryName', 'official'),
               native: native.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'native';
         native.build();
@@ -985,10 +987,10 @@ class _$Currency extends Currency {
   @override
   final String symbol;
 
-  factory _$Currency([void Function(CurrencyBuilder) updates]) =>
+  factory _$Currency([void Function(CurrencyBuilder)? updates]) =>
       (new CurrencyBuilder()..update(updates)).build();
 
-  _$Currency._({this.name, this.symbol}) : super._() {
+  _$Currency._({required this.name, required this.symbol}) : super._() {
     BuiltValueNullFieldError.checkNotNull(name, 'Currency', 'name');
     BuiltValueNullFieldError.checkNotNull(symbol, 'Currency', 'symbol');
   }
@@ -1021,15 +1023,15 @@ class _$Currency extends Currency {
 }
 
 class CurrencyBuilder implements Builder<Currency, CurrencyBuilder> {
-  _$Currency _$v;
+  _$Currency? _$v;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  String _symbol;
-  String get symbol => _$this._symbol;
-  set symbol(String symbol) => _$this._symbol = symbol;
+  String? _symbol;
+  String? get symbol => _$this._symbol;
+  set symbol(String? symbol) => _$this._symbol = symbol;
 
   CurrencyBuilder();
 
@@ -1050,7 +1052,7 @@ class CurrencyBuilder implements Builder<Currency, CurrencyBuilder> {
   }
 
   @override
-  void update(void Function(CurrencyBuilder) updates) {
+  void update(void Function(CurrencyBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1073,10 +1075,10 @@ class _$CountryIdd extends CountryIdd {
   @override
   final BuiltList<String> suffixes;
 
-  factory _$CountryIdd([void Function(CountryIddBuilder) updates]) =>
+  factory _$CountryIdd([void Function(CountryIddBuilder)? updates]) =>
       (new CountryIddBuilder()..update(updates)).build();
 
-  _$CountryIdd._({this.root, this.suffixes}) : super._() {
+  _$CountryIdd._({required this.root, required this.suffixes}) : super._() {
     BuiltValueNullFieldError.checkNotNull(root, 'CountryIdd', 'root');
     BuiltValueNullFieldError.checkNotNull(suffixes, 'CountryIdd', 'suffixes');
   }
@@ -1111,16 +1113,16 @@ class _$CountryIdd extends CountryIdd {
 }
 
 class CountryIddBuilder implements Builder<CountryIdd, CountryIddBuilder> {
-  _$CountryIdd _$v;
+  _$CountryIdd? _$v;
 
-  String _root;
-  String get root => _$this._root;
-  set root(String root) => _$this._root = root;
+  String? _root;
+  String? get root => _$this._root;
+  set root(String? root) => _$this._root = root;
 
-  ListBuilder<String> _suffixes;
+  ListBuilder<String>? _suffixes;
   ListBuilder<String> get suffixes =>
       _$this._suffixes ??= new ListBuilder<String>();
-  set suffixes(ListBuilder<String> suffixes) => _$this._suffixes = suffixes;
+  set suffixes(ListBuilder<String>? suffixes) => _$this._suffixes = suffixes;
 
   CountryIddBuilder();
 
@@ -1141,7 +1143,7 @@ class CountryIddBuilder implements Builder<CountryIdd, CountryIddBuilder> {
   }
 
   @override
-  void update(void Function(CountryIddBuilder) updates) {
+  void update(void Function(CountryIddBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1155,7 +1157,7 @@ class CountryIddBuilder implements Builder<CountryIdd, CountryIddBuilder> {
                   root, 'CountryIdd', 'root'),
               suffixes: suffixes.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'suffixes';
         suffixes.build();
@@ -1177,10 +1179,11 @@ class _$CountryNameTranslation extends CountryNameTranslation {
   final String common;
 
   factory _$CountryNameTranslation(
-          [void Function(CountryNameTranslationBuilder) updates]) =>
+          [void Function(CountryNameTranslationBuilder)? updates]) =>
       (new CountryNameTranslationBuilder()..update(updates)).build();
 
-  _$CountryNameTranslation._({this.official, this.common}) : super._() {
+  _$CountryNameTranslation._({required this.official, required this.common})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(
         official, 'CountryNameTranslation', 'official');
     BuiltValueNullFieldError.checkNotNull(
@@ -1220,15 +1223,15 @@ class _$CountryNameTranslation extends CountryNameTranslation {
 
 class CountryNameTranslationBuilder
     implements Builder<CountryNameTranslation, CountryNameTranslationBuilder> {
-  _$CountryNameTranslation _$v;
+  _$CountryNameTranslation? _$v;
 
-  String _official;
-  String get official => _$this._official;
-  set official(String official) => _$this._official = official;
+  String? _official;
+  String? get official => _$this._official;
+  set official(String? official) => _$this._official = official;
 
-  String _common;
-  String get common => _$this._common;
-  set common(String common) => _$this._common = common;
+  String? _common;
+  String? get common => _$this._common;
+  set common(String? common) => _$this._common = common;
 
   CountryNameTranslationBuilder();
 
@@ -1249,7 +1252,7 @@ class CountryNameTranslationBuilder
   }
 
   @override
-  void update(void Function(CountryNameTranslationBuilder) updates) {
+  void update(void Function(CountryNameTranslationBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

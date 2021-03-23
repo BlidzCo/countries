@@ -324,14 +324,13 @@ abstract class CountrySubDivision
   @BuiltValueField(wireName: 'name')
   String get name;
   @BuiltValueField(wireName: 'type')
-  @nullable
-  String get type;
+  String? get type;
   String toJson() {
     return json
         .encode(serializers.serializeWith(CountrySubDivision.serializer, this));
   }
 
-  static CountrySubDivision fromJson(String jsonString) {
+  static CountrySubDivision? fromJson(String jsonString) {
     return serializers.deserializeWith(
         CountrySubDivision.serializer, json.decode(jsonString));
   }

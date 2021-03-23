@@ -3,32 +3,32 @@
 /// More dartdocs go here.
 library countries;
 
-import 'dart:collection';
-import 'package:universal_io/io.dart';
 import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
+
 import 'package:built_collection/built_collection.dart';
-import 'src/serializers.dart';
-import 'src/subdivision_data.dart';
-import 'src/country_data.dart';
 import 'package:computer/computer.dart';
 import 'package:stringmatcher/stringmatcher.dart';
+import 'package:universal_io/io.dart';
 
-bool _useComputer;
+import 'src/country_data.dart';
+import 'src/serializers.dart';
+import 'src/subdivision_data.dart';
+
+bool _useComputer = false;
 
 BuiltMap<String, CountryData> _buildCountries(dataString) {
-  List<dynamic> data = json.decode(dataString);
+  final List<dynamic> data = json.decode(dataString);
 
-  BuiltList countryData = deserializeListOf<CountryData>(data);
-  return BuiltMap.from({
-    for (var item in countryData)
-      (item as CountryData).cca2: item as CountryData
-  });
+  final BuiltList countryData = deserializeListOf<CountryData>(data);
+  return BuiltMap.from(
+      {for (var item in countryData) (item as CountryData).cca2: item});
 }
 
 BuiltMap<String, SubDivision<String, BuiltList<CountrySubDivision>>>
     _buildSubDivisions(dataString) {
-  List<dynamic> data = json.decode(dataString);
+  final List<dynamic> data = json.decode(dataString);
 
   return BuiltMap.from({
     for (var item in data)
@@ -44,60 +44,60 @@ BuiltMap<String, SubDivision<String, BuiltList<CountrySubDivision>>>
 }
 
 String _findCountry(List<dynamic> params) {
-  var _countries = params[0] as BuiltMap<String, CountryData>;
-  var name = params[1] as String;
-  var fuzzyMatch = params[2] as bool ?? false;
-  var ratio = params[3] as double ?? 0.5;
-  var keys = _countries.keys.toList();
+  final _countries = params[0] as BuiltMap<String, CountryData?>;
+  var name = params[1]!;
+  final bool fuzzyMatch = params[2]!;
+  final double ratio = params[3]! ?? 0.5;
+  final keys = _countries.keys.toList();
 
-  if (name == null || name == '') {
+  if (name.isEmpty) {
     throw UnsupportedError('Needle must not be empty');
   }
 
   name = name.toLowerCase();
 
-  var found;
-  StringMatcher sim;
+  String found = '';
+  StringMatcher? sim;
 
   if (fuzzyMatch) {
     sim = StringMatcher(term: Term.char, algorithm: Levenshtein());
   }
 
-  while (keys.isNotEmpty && found == null) {
-    var key = keys.removeLast();
-    var tmp = _countries[key];
-    var common = tmp.name.common.toLowerCase();
-    var official = tmp.name.official.toLowerCase();
-    if (tmp.name.common.toLowerCase() == name ||
-        tmp.name.official.toLowerCase() == name ||
+  while (keys.isNotEmpty && found.isEmpty) {
+    final key = keys.removeLast();
+    final CountryData? tmp = _countries[key];
+    final common = tmp?.name.common.toLowerCase();
+    final official = tmp?.name.official.toLowerCase();
+    if (common == name ||
+        official == name ||
         fuzzyMatch &&
-            (sim.similar(common, name).ratio >= ratio ||
-                sim.similar(official, name).ratio >= ratio)) {
+            ((sim?.similar(common, name)?.ratio ?? 0.0) >= ratio ||
+                (sim?.similar(official, name)?.ratio ?? 0.0) >= ratio)) {
       found = key;
     }
-    if (found == null && tmp.name.native.keys.isNotEmpty) {
-      var nativeNames = tmp.name.native;
-      var nativeKeys = nativeNames.keys.toList();
-      while (nativeKeys.isNotEmpty && found == null) {
-        var nativeKey = nativeKeys.removeLast();
-        var nativeTmp = nativeNames[nativeKey];
-        var common = nativeTmp.common.toLowerCase();
-        var official = nativeTmp.official.toLowerCase();
+    if (found.isEmpty && (tmp?.name.native.keys.isNotEmpty ?? false)) {
+      final nativeNames = tmp!.name.native;
+      final nativeKeys = nativeNames.keys.toList();
+      while (nativeKeys.isNotEmpty && found.isEmpty) {
+        final nativeKey = nativeKeys.removeLast();
+        final CountryNameTranslation? nativeTmp = nativeNames[nativeKey];
+        final common = nativeTmp?.common.toLowerCase();
+        final official = nativeTmp?.official.toLowerCase();
         if (nativeTmp != null &&
             (common == name ||
                 official == name ||
                 fuzzyMatch &&
-                    (sim.similar(common, name).ratio >= ratio ||
-                        sim.similar(official, name).ratio >= ratio))) {
+                    (sim?.similar(common, name)?.ratio ?? 0.0) >= ratio ||
+                (sim?.similar(official, name)?.ratio ?? 0.0) >= ratio)) {
           found = key;
         }
       }
-      if (found == null) {
-        var altSpellings = tmp.altSpellings.toList();
-        while (altSpellings.isNotEmpty && found == null) {
-          var item = altSpellings.removeLast().toLowerCase();
+      if (found.isEmpty) {
+        final altSpellings = tmp.altSpellings.toList();
+        while (altSpellings.isNotEmpty && found.isEmpty) {
+          final item = altSpellings.removeLast().toLowerCase();
           if (item == name ||
-              fuzzyMatch && sim.similar(name, item).ratio >= ratio) {
+              fuzzyMatch && (sim?.similar(name, item).ratio ?? 0.0) >= ratio) {
             found = key;
           }
         }
@@ -113,12 +113,12 @@ class SubDivision<K, V> extends MapView<K, V> {
 
   List<CountrySubDivision> get toList => [
         for (K key in keys)
-          for (CountrySubDivision item in this[key]) item
+          if (this[key] is Map)
+            // ignore: cast_nullable_to_non_nullable
+            for (final item in (this[key] as Map).values) item
       ];
 
-  SubDivision(Map<K, V> divisions, String country)
-      : country = country,
-        super(divisions);
+  SubDivision(Map<K, V> divisions, this.country) : super(divisions);
 }
 
 class Country {
@@ -134,31 +134,31 @@ class Country {
       _subDivisionData;
   CountryData get details => _countryData;
   String get currency => _countryData.currencies.keys.first;
-  Currency get currencyDetails =>
+  Currency? get currencyDetails =>
       _countryData.currencies[_countryData.currencies.keys.first];
   String get name => _countryData.name.common;
-  String get language =>
+  String? get language =>
       _countryData.languages[_countryData.languages.keys.first];
   String get languageIso639_3 => _countryData.languages.keys.first;
   BuiltMap<String, String> get allLanguages => _countryData.languages;
   String get id => _countryData.cca2;
 
   List<CountrySubDivision> searchSubdivisionByString(String needle) {
-    if (needle == null || needle == '') {
+    if (needle.isEmpty) {
       throw UnsupportedError('Needle must not be empty');
     }
 
     needle = needle.toLowerCase();
 
-    var found = <CountrySubDivision>[];
+    final found = <CountrySubDivision>[];
 
     _subDivisionData.forEach((key, subDivList) {
-      subDivList.forEach((CountrySubDivision subdiv) {
+      for (final CountrySubDivision subdiv in subDivList) {
         if (needle.length > 2 && subdiv.name.toLowerCase().contains(needle) ||
             subdiv.id.toLowerCase().contains(needle)) {
           found.add(subdiv);
         }
-      });
+      }
     });
 
     return found;
@@ -166,23 +166,23 @@ class Country {
 
   List<CountrySubDivision> fuzzySearchSubdivisionByString(String needle,
       [double limit = 0.5]) {
-    if (needle == null || needle == '') {
+    if (needle.isEmpty) {
       throw UnsupportedError('Needle must not be empty');
     }
 
     needle = needle.toLowerCase();
 
-    var sim = StringMatcher(term: Term.char, algorithm: Levenshtein());
-    var found = <CountrySubDivision>[];
+    final sim = StringMatcher(term: Term.char, algorithm: Levenshtein());
+    final found = <CountrySubDivision>[];
 
     _subDivisionData.forEach((key, subDivList) {
-      subDivList.forEach((CountrySubDivision subdiv) {
-        var match = sim.similar(needle, subdiv.name).ratio;
+      for (final CountrySubDivision subdiv in subDivList) {
+        final match = sim.similar(needle, subdiv.name).ratio;
         if (needle.length > 2 && match >= limit ||
             subdiv.id.toLowerCase().contains(needle)) {
           found.add(subdiv);
         }
-      });
+      }
     });
 
     return found;
@@ -191,7 +191,7 @@ class Country {
 
 class Countries {
   static final Countries _instance = Countries._internal();
-  static String _countriesJson,
+  static String? _countriesJson,
       _subdivisionsJson,
       _languagesJson,
       _countriesFile,
@@ -204,9 +204,9 @@ class Countries {
       {String countriesFile = 'lib/countries.json',
       String subdivisionsFile = 'lib/subdivisions.json',
       String languagesFile = 'lib/language-codes.json',
-      String countriesJson,
-      String subdivisionsJson,
-      String languagesJson}) {
+      String? countriesJson,
+      String? subdivisionsJson,
+      String? languagesJson}) {
     _countriesJson = countriesJson;
     _subdivisionsJson = subdivisionsJson;
     _languagesJson = languagesJson;
@@ -217,29 +217,29 @@ class Countries {
     return _instance;
   }
 
-  BuiltMap<String, CountryData> _countries;
-  BuiltMap<String, SubDivision<String, BuiltList<CountrySubDivision>>>
+  BuiltMap<String, CountryData>? _countries;
+  BuiltMap<String, SubDivision<String, BuiltList<CountrySubDivision>>>?
       _subdivisions;
-  Map<String, Map<String, String>> _languages;
-  Map<String, Country> _builtCountries;
+  final Map<String, Map<String, String>> _languages = {};
+  Map<String, Country> _builtCountries = {};
 
-  Country getCountry(String name) {
-    if (_countries.containsKey(name)) {
-      _builtCountries = _builtCountries ?? {};
+  Country? getCountry(String name) {
+    if (_countries!.containsKey(name)) {
+      _builtCountries = _builtCountries;
       _builtCountries[name] = _builtCountries[name] ??
-          Country(_countries[name], _subdivisions[name]);
+          Country(_countries![name]!, _subdivisions![name]!);
       return _builtCountries[name];
     } else {
-      throw (UnsupportedError(
-          'Country $name does not exist or Countries has not yet loaded'));
+      throw UnsupportedError(
+          'Country $name does not exist or Countries has not yet loaded');
     }
   }
 
-  Future<Country> searchByName(String name,
+  Future<Country?> searchByName(String name,
       [bool fuzzyMatch = false, double ratio = 0.5]) async {
     String found;
 
-    if (name == null || name == '') {
+    if (name.isEmpty) {
       throw UnsupportedError('Name must not be empty');
     }
 
@@ -250,17 +250,18 @@ class Countries {
       found = _findCountry([_countries, name, fuzzyMatch, ratio]);
     }
 
-    if (found != null) {
+    if (found.isNotEmpty) {
       return getCountry(found);
     }
 
     return null;
   }
 
-  String getIso639_1(String iso639_3) => (_languages[iso639_3] ?? {})['alpha2'];
+  String? getIso639_1(String iso639_3) =>
+      (_languages[iso639_3] ?? {})['alpha2'];
 
-  Computer _computer;
-  Completer _loader;
+  late Computer _computer;
+  late Completer _loader;
 
   Future get loader => _loader.future;
 
@@ -278,21 +279,21 @@ class Countries {
       _computer = Computer();
       initComputer = _computer.turnOn();
     } else {
-      var _tmp = Completer();
+      final _tmp = Completer();
       initComputer = _tmp.future;
       _tmp.complete();
     }
 
-    initComputer.whenComplete(() {
+    initComputer.whenComplete(() async {
       //print('Computer loaded start exec');
-      Future loadCountries = _getCountries();
-      Future loadSubDivisions = _getSubDivisions();
-      Future loadLanguages = _getLanguages();
+      final Future loadCountries = _getCountries();
+      final Future loadSubDivisions = _getSubDivisions();
+      final Future loadLanguages = _getLanguages();
 
       //print('execs started, wait...');
 
-      return Future.wait([loadCountries, loadSubDivisions, loadLanguages]);
-    }).then((val) {
+      await Future.wait([loadCountries, loadSubDivisions, loadLanguages]);
+    }).then((_) {
       //print('Waiting done complete loader.');
       _loader.complete();
     });
@@ -309,8 +310,8 @@ class Countries {
 
   Future<void> _getCountries() async {
     //print('Load ${_countriesFile ?? './countries.json'}');
-    var dataString = _countriesJson ??
-        await (File(_countriesFile ?? './countries.json').readAsString());
+    final dataString = _countriesJson ??
+        await File(_countriesFile ?? './countries.json').readAsString();
     //print('compute countries json');
     // _countries = _buildCountries(dataString);
     if (_useComputer) {
@@ -326,8 +327,8 @@ class Countries {
 
   Future<void> _getSubDivisions() async {
     //print('Load ${_subdivisionsFile ?? './subdivisions.json'}');
-    var dataString = _subdivisionsJson ??
-        await (File(_subdivisionsFile ?? './subdivisions.json').readAsString());
+    final dataString = _subdivisionsJson ??
+        await File(_subdivisionsFile ?? './subdivisions.json').readAsString();
     //print('compute subdivisions json');
     // _subdivisions = _buildSubDivisions(dataString);
     if (_useComputer) {
@@ -340,16 +341,14 @@ class Countries {
 
   Future<void> _getLanguages() async {
     //print('Load ${_subdivisionsFile ?? './subdivisions.json'}');
-    var dataString = _languagesJson ??
-        await (File(_languagesFile ?? './language-codes.json').readAsString());
+    final dataString = _languagesJson ??
+        await File(_languagesFile ?? './language-codes.json').readAsString();
     //print('compute languages json');
     // _languages = _buildlanguages(dataString);
     _languagesJsonDecoded = json.decode(dataString);
 
-    _languages = {};
-
-    List<dynamic>.from(_languagesJsonDecoded).forEach((dynamic item) {
+    for (final item in List<dynamic>.from(_languagesJsonDecoded)) {
       _languages[item['alpha3-b']] = Map<String, String>.from(item);
-    });
+    }
   }
 }
