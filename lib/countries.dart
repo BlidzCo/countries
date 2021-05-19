@@ -113,9 +113,13 @@ class SubDivision<K, V> extends MapView<K, V> {
 
   List<CountrySubDivision> get toList => [
         for (K key in keys)
-          if (this[key] is Map)
-            // ignore: cast_nullable_to_non_nullable
-            for (final item in (this[key] as Map).values) item
+          if (this[key] is Map || this[key] is Iterable)
+            for (final item in this[key] is Map
+                // ignore: cast_nullable_to_non_nullable
+                ? (this[key] as Map).values
+                // ignore: cast_nullable_to_non_nullable
+                : (this[key] as Iterable))
+              item
       ];
 
   SubDivision(Map<K, V> divisions, this.country) : super(divisions);
