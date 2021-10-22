@@ -16,7 +16,7 @@ import 'src/country_data.dart';
 import 'src/serializers.dart';
 import 'src/subdivision_data.dart';
 
-bool _useComputer = false;
+const bool _useComputer = !identical(0, 0.0);
 
 BuiltMap<String, CountryData> _buildCountries(dataString) {
   final List<dynamic> data = json.decode(dataString);
@@ -272,12 +272,6 @@ class Countries {
   Countries._internal() {
     _loader = Completer();
     Future initComputer;
-
-    try {
-      _useComputer = Platform.isAndroid || Platform.isIOS;
-    } catch (e) {
-      _useComputer = false;
-    }
 
     if (_useComputer) {
       _computer = Computer();
