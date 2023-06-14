@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   built_value: ^8.0.0
-  computer: ^2.0.0
+  computer: ^3.2.1
   universal_io: ^2.0.0
   fuzzywuzzy: ^0.2.0
 
